@@ -1,0 +1,39 @@
+.admin-container {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  // min-height: 100vh !important; // ! extremely important for sidebar to fill full screen height
+
+  .admin-sidebar {
+    position: sticky;
+    top: 0;
+    align-self: start;
+    height: 100vh;
+  }
+
+  .admin-content {
+    padding: min(30px, 7%);
+
+    .admin-main {
+      .agvs-container {
+        border: 1px solid cyan;
+        border-radius: 1em;
+        margin-bottom: 20px;
+        padding: min(3em, 15%);
+
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 15px;
+        justify-content: center;
+      }
+
+      .table-orders-container {
+        .actions-cell {
+          display: grid;
+          grid-template-columns: repeat(3, auto);
+          gap: 5px;
+          justify-content: space-center;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,127 @@
+.login-register-container {
+  max-height: 100vh;
+  background-image: url(background.jpg);
+  background-size: cover;
+  background-position: right;
+}
+
+.wrapper {
+  box-sizing: border-box;
+  background-color: var(--base-color);
+  height: 100vh;
+  width: max(40%, 600px); // ! bỏ đi nếu muốn full chiều rộng
+  padding: 10px;
+  border-radius: 0 20px 20px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-register-form {
+  width: min(400px, 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.login-register-form > div {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.div-to-label > label {
+  flex-shrink: 0;
+  height: 50px;
+  width: 50px;
+  background-color: var(--accent-color);
+  fill: var(--base-color);
+  color: var(--base-color);
+  border-radius: 10px 0 0 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.login-register-form input {
+  box-sizing: border-box;
+  flex-grow: 1;
+  min-width: 0;
+  height: 50px;
+  padding: 1em;
+  font: inherit;
+  border-radius: 0 10px 10px 0;
+  border: 2px solid var(--input-color);
+  border-left: none;
+  background-color: var(--input-color);
+  transition: 150ms ease;
+  color: black;
+}
+
+.login-register-form input:hover {
+  border-color: var(--accent-color);
+}
+
+.login-register-form input:focus {
+  outline: none;
+  border-color: var(--text-color);
+}
+
+.div-to-label:has(input:focus) > label {
+  background-color: var(--text-color);
+}
+
+.login-register-form input::placeholder {
+  color: var(--text-color);
+}
+
+@media (max-width: 1100px) {
+  .wrapper {
+    width: min(600px, 100%);
+    border-radius: 0;
+  }
+}
+
+.login-register-form div.incorrect label {
+  background-color: #f06272;
+}
+
+.login-register-form div.incorrect input {
+  border-color: #f06272;
+}
+
+.icons-eye {
+  cursor: pointer;
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+}
+
+.login-register-container {
+  .loader-icon {
+    font-size: 14px;
+    color: #00d4ff;
+    animation: spin 1s infinite linear;
+  }
+
+  @keyframes spin {
+    from {
+      transform: scale(1) rotate(0deg);
+    }
+    to {
+      transform: scale(1) rotate(360deg);
+    }
+  }
+}
+
+button {
+  &:disabled {
+    background: #dddddd !important;
+    color: #afafaf;
+    cursor: no-drop;
+  }
+}

@@ -1,0 +1,28 @@
+:root {
+  --accent-color: #8672ff;
+  --base-color: white;
+  --text-color: #2e2b41;
+  --input-color: #f3f0ff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family:
+    Poppins,
+    Segoe UI,
+    sans-serif;
+  font-size: 14pt;
+  color: var(--text-color);
+}
+
+body {
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: #212529; // ! dòng này là background toàn bộ page
+  // color: #a2a5b3;
+  align-content: center;
+}
