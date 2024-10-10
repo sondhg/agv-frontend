@@ -4,17 +4,15 @@
 
 ## Clone my code
 
-> "tailwind" branch is preferred over "master" branch
-
 ```bash
-git clone -b tailwind https://github.com/sondhg/agv-project.git
-cd agv-project
+git clone https://github.com/sondhg/agv-frontend.git
+cd agv-frontend
 ```
 
 ## Required installations
 
 1. **NodeJS**: [Download here](https://nodejs.org/en).
-2. **Dependency libraries**: In the `agv-project/client` folder, run:
+2. **Dependency libraries**
 
 ```bash
 npm i
@@ -26,11 +24,11 @@ npm i
 
 - **Run GUI**:
 
-  ```bash
-  npm run dev
-  ```
+```bash
+npm run dev
+```
 
-  Visit [http://localhost:3000](http://localhost:3000) in your browser to see the GUI.
+Visit [http://localhost:3000](http://localhost:3000) in your browser to see the GUI.
 
 - **Run Django Server**: Clone and follow the README instructions in my [Django Server Repo](https://github.com/sondhg/my-django-server) to have a PostgreSQL database at port 5432 and a Django server at port 8000 like I do.
 
@@ -44,13 +42,13 @@ npm i
 ## Important files
 
 - API configs for **Manage Orders**:
-  - `client/src/services/apiServices.jsx`
-  - `client/src/customize/axiosCustomize.jsx`
+  - `src/services/apiServices.jsx`
+  - `src/customize/axiosCustomize.jsx`
 - API configs for **Authentication**:
-  - `client/src/services/HA_apiServices.jsx`
-  - `client/src/customize/HA_axiosCustomize.jsx`
+  - `src/services/HA_apiServices.jsx`
+  - `src/customize/HA_axiosCustomize.jsx`
 - **WebSocket for live data** (testing with Binance API):
-  - `client/src/components/Admin/Content/Dashboard/Dashboard.jsx`
+  - `src/components/Admin/Content/Dashboard/Dashboard.jsx`
   - [WebSocket URL](wss://stream.binance.com:9443/ws/btcusdt@aggTrade)
 
 ## Learning resources
