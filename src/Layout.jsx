@@ -19,7 +19,6 @@ const NotFound = () => {
 };
 
 export default function Layout() {
-  //!tạm bỏ className bg-dark khỏi div đầu tiên để animated card hiện border gradient
   return (
     <div className="text-white">
       <Suspense fallback={<div>Loading...</div>}>

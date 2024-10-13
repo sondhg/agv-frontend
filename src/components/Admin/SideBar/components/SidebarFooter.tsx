@@ -46,7 +46,7 @@ const StyledCollapsedSidebarFooter = styled.a`
   /* background: #0098e5; */
 `;
 
-const codeUrl = "https://github.com/sondhg/agv-project";
+const codeUrl = "https://github.com/sondhg/agv-frontend";
 
 export const SidebarFooter: React.FC<SidebarFooterProps> = ({
   children,

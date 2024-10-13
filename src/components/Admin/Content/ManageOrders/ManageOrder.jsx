@@ -1,5 +1,5 @@
 import cloneDeep from "lodash/cloneDeep";
-import debounce from 'lodash/debounce';
+import debounce from "lodash/debounce";
 import { useEffect, useState } from "react";
 import { CSVLink } from "react-csv";
 import "react-toastify/dist/ReactToastify.css";
