@@ -50,15 +50,16 @@ export default function Login() {
     setIsLoading(true);
 
     // submit api
-    let data = await HA_postLogin(email.trim(), password); // remove spaces
-    console.log(">>> check res: ", data);
-    if (data && data.jwt) {
-      dispatch(doLogin(data));
+    let res = await HA_postLogin(email.trim(), password); // remove spaces
+    console.log(">>> check res: ", res);
+
+    if (res && res.jwt) {
+      dispatch(doLogin(res));
       toast.success("Login successful!");
       setIsLoading(false);
       navigate("/");
     } else {
-      toast.error(data.detail || "Login failed");
+      toast.error(res.detail || "Login failed");
       setIsLoading(false);
     }
   };

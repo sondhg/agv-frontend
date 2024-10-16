@@ -57,16 +57,14 @@ export default function Register() {
     setIsLoading(true);
 
     // Call API for registration
-    let data = await HA_postRegister(email, password, name);
-    if (data && data.email[0] !== "user with this email already exists.") {
+    let res = await HA_postRegister(email, password, name);
+
+    if (res && res.email[0] !== "user with this email already exists.") {
       toast.success("Register successfully");
       setIsLoading(false);
       navigate("/login");
-    } else if (
-      data &&
-      data.email[0] === "user with this email already exists."
-    ) {
-      toast.error(data.email[0]);
+    } else if (res && res.email[0] === "user with this email already exists.") {
+      toast.error(res.email[0]);
       setIsLoading(false);
     }
   };
