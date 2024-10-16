@@ -5,7 +5,7 @@ import {
   PasswordLockIconSVG,
   UsernameIconSVG,
 } from "../../assets/SVGs/svgAuth";
-import { HA_postRegister } from "../../services/HA_apiServices";
+import { postRegister } from "../../services/apiServices";
 import "./Auth.scss";
 
 export default function Register() {
@@ -57,7 +57,7 @@ export default function Register() {
     setIsLoading(true);
 
     // Call API for registration
-    let res = await HA_postRegister(email, password, name);
+    let res = await postRegister(email, password, name);
 
     if (res && res.email[0] !== "user with this email already exists.") {
       toast.success("Register successfully");

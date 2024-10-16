@@ -41,12 +41,11 @@ Visit [http://localhost:3000](http://localhost:3000) in your browser to see the 
 
 ## Important files
 
-- API configs for **Manage Orders**:
+- API functions and configs
+
   - `src/services/apiServices.jsx`
   - `src/customize/axiosCustomize.jsx`
-- API configs for **Authentication**:
-  - `src/services/HA_apiServices.jsx`
-  - `src/customize/HA_axiosCustomize.jsx`
+
 - **WebSocket for live data** (testing with Binance API):
   - `src/components/Admin/Content/Dashboard/Dashboard.jsx`
   - [WebSocket URL](wss://stream.binance.com:9443/ws/btcusdt@aggTrade)

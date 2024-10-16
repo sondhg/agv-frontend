@@ -1,28 +1,50 @@
 import axios from "../utils/axiosCustomize"; //axios này là hàm instance, cách đặt tên ko quan trọng
 
 const postCreateOrder = (order) => {
-  return axios.post("/orders-draft/", order);
-  // return axios.post("/orders-draft", { order: order }); // ! cách này thêm key là order trước object
+  return axios.post("/orders/", order);
+  // return axios.post("/orders", { order: order }); // ! cách này thêm key là order trước object
 };
 
 const getAllOrders = () => {
-  return axios.get("/orders-draft/");
+  return axios.get("/orders/");
 };
 
 const putUpdateOrder = (order) => {
-  return axios.put(`/orders-draft/${order.id}`, order);
+  return axios.put(`/orders/${order.id}/`, order);
 };
 
 const deleteOrder = (orderId) => {
-  return axios.delete(`/orders-draft/${orderId}`, { data: { id: orderId } });
+  return axios.delete(`/orders/${orderId}/`, { data: { id: orderId } });
+};
+
+const postLogin = (email, password) => {
+  return axios.post("/login", {
+    email,
+    password,
+  });
+};
+
+const postRegister = (email, password, name) => {
+  return axios.post("/register", {
+    email,
+    password,
+    name,
+  });
+};
+
+const postLogout = (email, refresh_token) => {
+  return axios.post("/logout", { email, refresh_token });
 };
 
 export {
-  //AGV
+  // orders
   getAllOrders,
   deleteOrder,
-
-  //new AGV
   postCreateOrder,
   putUpdateOrder,
+
+  // users
+  postLogin,
+  postRegister,
+  postLogout,
 };

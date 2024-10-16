@@ -1,15 +1,21 @@
 import axios from "axios";
+import { store } from "../redux/store";
+
 const instance = axios.create({
-  baseURL: "http://localhost:8000",
+  baseURL: "http://localhost:8000/api",
+  headers: {
+    "content-type": "application/json",
+  },
 });
+
 // Add a request interceptor
 instance.interceptors.request.use(
   function (config) {
+    // console.log(">>> check store: ", store.getState());
+    const jwt = store?.getState()?.user?.account?.jwt;
+    config.headers["Authorization"] = `Bearer ${jwt}`;
     // Do something before request is sent
 
-    // // Alter defaults after instance has been created
-    // config.headers.Authorization = `Bearer ${localStorage.getItem("jwt")}`;
-    // với json-server ảo sẽ bị lỗi CORS nếu thêm header Authorization nên phải comment tắt đi
     return config;
   },
   function (error) {

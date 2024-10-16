@@ -121,15 +121,17 @@ export default function ModalCreateOrder(props) {
             <label className="form-control w-full max-w-xs">
               <div>
                 <div className="label">
-                  <span className="label-text">
-                    Date (month/date/year) and time
-                  </span>
+                  <span className="label-text">Date (month/date/year)</span>
                 </div>
                 <DatePicker
+                  title="Please enter date in MM/dd/yyyy format (e.g., 12/31/2024)"
                   className="select select-bordered select-accent"
                   toggleCalendarOnIconClick
                   customInput={
-                    <input className="input input-bordered w-80 max-w-xs" />
+                    <input
+                      maxLength={10}
+                      className="input input-bordered w-80 max-w-xs"
+                    />
                   }
                   selected={originalDate}
                   minDate={NEW_DATE}
@@ -152,6 +154,9 @@ export default function ModalCreateOrder(props) {
                 className="input input-bordered input-accent w-full max-w-xs"
                 value={start_time}
                 onChange={(event) => setStartTime(event.target.value)}
+                maxLength={8}
+                pattern="^([01]\d|2[0-3]):([0-5]\d):([0-5]\d)$"
+                title="Please enter time in hh:mm:ss format (e.g., 14:30:00)"
               />
             </label>
 

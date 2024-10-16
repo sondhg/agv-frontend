@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { doLogout } from "../../../redux/userSlice";
-import { HA_logout } from "../../../services/HA_apiServices";
+import { postLogout } from "../../../services/apiServices";
 
 export default function Header() {
   const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
@@ -11,7 +11,7 @@ export default function Header() {
   const navigate = useNavigate();
 
   const handleLogOut = async () => {
-    let res = await HA_logout(account.email, account.refresh_token);
+    let res = await postLogout(account.email, account.refresh_token);
     if (res /* && res.EC === 0 */) {
       //need to clear data redux
       dispatch(doLogout());

@@ -105,7 +105,7 @@ export default function TableOrders(props) {
         <div>
           <button className="btn btn-primary btn-sm" onClick={removeSorting}>
             <i className="fa-solid fa-arrow-up-1-9"></i>
-            <span>Default sort by date and time</span>
+            <span>Remove sorting</span>
           </button>
         </div>
       </div>

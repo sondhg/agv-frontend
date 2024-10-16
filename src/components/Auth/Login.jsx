@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { PasswordLockIconSVG } from "../../assets/SVGs/svgAuth";
 import { doLogin } from "../../redux/userSlice";
-import { HA_postLogin } from "../../services/HA_apiServices";
+import { postLogin } from "../../services/apiServices";
 import "./Auth.scss";
 
 export default function Login() {
@@ -50,12 +50,11 @@ export default function Login() {
     setIsLoading(true);
 
     // submit api
-    let res = await HA_postLogin(email.trim(), password); // remove spaces
+    let res = await postLogin(email.trim(), password); // remove spaces
     console.log(">>> check res: ", res);
 
     if (res && res.jwt) {
       dispatch(doLogin(res));
-      toast.success("Login successful!");
       setIsLoading(false);
       navigate("/");
     } else {
