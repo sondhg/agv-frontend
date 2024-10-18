@@ -1,7 +1,5 @@
 import PropTypes from "prop-types";
 import { useState } from "react";
-import csvExample from "../../../../../assets/images/testing/csvExample.png";
-import csvExample2 from "../../../../../assets/images/testing/csvExample2.png";
 import {
   InfoIconSVG,
   WarningIconSVG,
