@@ -7,7 +7,6 @@ import { toast } from "react-toastify";
 import { WarningIconSVG } from "../../../../../assets/SVGs/svg_daisyUI";
 import { putUpdateOrder } from "../../../../../services/apiServices";
 import {
-  agvIDs,
   endPoints,
   loadNames,
   startPoints,
@@ -33,7 +32,6 @@ export default function ModalUpdateOrder(props) {
     setShowWarningMsg(false);
     setWarningMsg("");
 
-    setAgvId(agvIDs[0]);
     setOriginalDate(NEW_DATE);
     setOrderDate(NEW_LOCALE_DATE);
     setStartTime(NEW_LOCALE_TIME);
@@ -44,7 +42,6 @@ export default function ModalUpdateOrder(props) {
     resetUpdateData();
   };
 
-  const [agv_id, setAgvId] = useState(agvIDs[0]);
   const [start_point, setStartPoint] = useState(startPoints[0]);
   const [end_point, setEndPoint] = useState(endPoints[0]);
   const [load_name, setLoadName] = useState(loadNames[0]);
@@ -59,7 +56,6 @@ export default function ModalUpdateOrder(props) {
   useEffect(() => {
     if (!isEmpty(dataUpdate)) {
       //Nếu biến dataUpdate ko rỗng thì update state
-      setAgvId(dataUpdate.agv_id);
       setOriginalDate(dataUpdate.order_date);
       setOrderDate(dataUpdate.order_date);
       setStartTime(dataUpdate.start_time);
@@ -100,7 +96,6 @@ export default function ModalUpdateOrder(props) {
 
     let orderWithID = {
       id: dataUpdate.id,
-      agv_id, // * code tắt của agv_id: agv_id
       order_date,
       start_time,
       start_point,
@@ -125,23 +120,6 @@ export default function ModalUpdateOrder(props) {
         <h1 className="pb-4 text-xl font-bold">Update existing order</h1>
         <form>
           <div className="grid grid-cols-2 grid-rows-4 gap-4">
-            <label className="form-control col-span-2 w-full max-w-xs">
-              <div className="label">
-                <span className="label-text">AGV ID</span>
-              </div>
-              <select
-                className="select select-bordered select-warning"
-                type="number"
-                value={agv_id}
-                onChange={(event) => setAgvId(event.target.value)}
-              >
-                {agvIDs.map((item) => (
-                  <option key={item} value={item}>
-                    {item}
-                  </option>
-                ))}
-              </select>
-            </label>
             <label className="form-control w-full max-w-xs">
               <div>
                 <div className="label">

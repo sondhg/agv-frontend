@@ -140,21 +140,6 @@ export default function TableOrders(props) {
             </th>
             <th scope="col">
               <div className="flex justify-between">
-                <span>AGV ID</span>
-                <span>
-                  <i
-                    onClick={() => handleSort("desc", "agv_id")}
-                    className="fa-solid fa-arrow-down mx-1 cursor-pointer"
-                  ></i>
-                  <i
-                    onClick={() => handleSort("asc", "agv_id")}
-                    className="fa-solid fa-arrow-up mx-1 cursor-pointer"
-                  ></i>
-                </span>
-              </div>
-            </th>
-            <th scope="col">
-              <div className="flex justify-between">
                 <span>Order date</span>
               </div>
             </th>
@@ -188,7 +173,6 @@ export default function TableOrders(props) {
                   </label>
                 </th>
                 <td className="font-bold">{item.id}</td>
-                <td>{item.agv_id}</td>
                 <td>{item.order_date}</td>
                 <td>{item.start_time}</td>
                 <td>Node {item.start_point}</td>

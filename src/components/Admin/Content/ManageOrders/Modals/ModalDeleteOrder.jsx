@@ -24,9 +24,6 @@ export default function ModalDeleteOrder(props) {
         <h1 className="pb-4 text-xl font-bold">Delete order</h1>
         <ul>
           <li>
-            AGV ID: <b>{dataDelete.agv_id}</b>
-          </li>
-          <li>
             Order date: <b>{dataDelete.order_date}</b>
           </li>
           <li>

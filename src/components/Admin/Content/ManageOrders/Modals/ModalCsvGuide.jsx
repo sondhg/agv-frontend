@@ -35,17 +35,17 @@ export default function ModalCsvGuide(props) {
           <div className="mockup-code">
             <pre data-prefix="$" className="text-success">
               <code>
-                agv_id,order_date,start_time,start_point,end_point,load_name,load_weight
+                order_date,start_time,start_point,end_point,load_name,load_weight
               </code>
             </pre>
             <pre data-prefix="$">
-              <code>1,7/29/2024,16:30:00,1,3,Stone,5</code>
+              <code>7/29/2024,16:30:00,1,3,Stone,5</code>
             </pre>
             <pre data-prefix="$">
-              <code>3,7/29/2024,16:35:00,9,4,Steel,10</code>
+              <code>7/29/2024,16:35:00,9,4,Steel,10</code>
             </pre>
             <pre data-prefix="$">
-              <code>2,7/30/2024,09:00:00,2,8,Cement,2</code>
+              <code>7/30/2024,09:00:00,2,8,Cement,2</code>
             </pre>
           </div>
           <div role="alert" className="alert shadow-lg">

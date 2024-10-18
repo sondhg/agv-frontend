@@ -48,7 +48,6 @@ export default function ManageOrder() {
     let result = [];
     if (listOrders && listOrders.length > 0) {
       result.push([
-        "agv_id",
         "order_date",
         "start_time",
         "start_point",
@@ -58,13 +57,12 @@ export default function ManageOrder() {
       ]);
       listOrders.map((item) => {
         let arr = [];
-        arr[0] = item.agv_id;
-        arr[1] = item.order_date;
-        arr[2] = item.start_time;
-        arr[3] = item.start_point;
-        arr[4] = item.end_point;
-        arr[5] = item.load_name;
-        arr[6] = item.load_weight;
+        arr[0] = item.order_date;
+        arr[1] = item.start_time;
+        arr[2] = item.start_point;
+        arr[3] = item.end_point;
+        arr[4] = item.load_name;
+        arr[5] = item.load_weight;
         result.push(arr);
       });
       setDataExport(result);

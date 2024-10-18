@@ -6,7 +6,6 @@ import { toast } from "react-toastify";
 import { WarningIconSVG } from "../../../../../assets/SVGs/svg_daisyUI";
 import { postCreateOrder } from "../../../../../services/apiServices";
 import {
-  agvIDs,
   endPoints,
   loadNames,
   startPoints,
@@ -26,7 +25,6 @@ const NEW_LOCALE_TIME = NEW_DATE.toLocaleTimeString([], {
 export default function ModalCreateOrder(props) {
   const { fetchListOrders } = props;
 
-  const [agv_id, setAgvId] = useState(agvIDs[0]);
   const [start_point, setStartPoint] = useState(startPoints[0]);
   const [end_point, setEndPoint] = useState(endPoints[0]);
   const [load_name, setLoadName] = useState(loadNames[0]);
@@ -44,7 +42,6 @@ export default function ModalCreateOrder(props) {
     setShowWarningMsg(false);
     setWarningMsg("");
 
-    setAgvId(agvIDs[0]);
     setOriginalDate(NEW_DATE);
     setOrderDate(NEW_LOCALE_DATE);
     setStartTime(NEW_LOCALE_TIME);
@@ -75,7 +72,6 @@ export default function ModalCreateOrder(props) {
     }
 
     let order = {
-      agv_id, // * code tắt của agv_id: agv_id
       order_date,
       start_time,
       start_point,
@@ -100,24 +96,6 @@ export default function ModalCreateOrder(props) {
         <h1 className="pb-4 text-xl font-bold">Add new order</h1>
         <form>
           <div className="grid grid-cols-2 grid-rows-4 gap-4">
-            <label className="form-control col-span-2 w-full max-w-xs">
-              <div className="label">
-                <span className="label-text">AGV ID</span>
-              </div>
-              <select
-                className="select select-bordered select-accent"
-                type="number"
-                value={agv_id}
-                onChange={(event) => setAgvId(event.target.value)}
-              >
-                {agvIDs.map((item) => (
-                  <option key={item} value={item}>
-                    {item}
-                  </option>
-                ))}
-              </select>
-            </label>
-
             <label className="form-control w-full max-w-xs">
               <div>
                 <div className="label">
