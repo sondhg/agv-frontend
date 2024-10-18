@@ -39,7 +39,7 @@ export default function ModalUpdateOrder(props) {
     setStartTime(NEW_LOCALE_TIME);
     setStartPoint(startPoints[0]);
     setEndPoint(endPoints[0]);
-    setLoadAmount("0");
+    setLoadWeight("0");
     setLoadName(loadNames[0]);
     resetUpdateData();
   };
@@ -48,12 +48,12 @@ export default function ModalUpdateOrder(props) {
   const [start_point, setStartPoint] = useState(startPoints[0]);
   const [end_point, setEndPoint] = useState(endPoints[0]);
   const [load_name, setLoadName] = useState(loadNames[0]);
-  const [load_amount, setLoadAmount] = useState("0");
+  const [load_weight, setLoadWeight] = useState("0");
   const [originalDate, setOriginalDate] = useState(NEW_DATE);
   const [order_date, setOrderDate] = useState(NEW_LOCALE_DATE);
   const [start_time, setStartTime] = useState(NEW_LOCALE_TIME);
 
-  const [cloneLoadAmount, setCloneLoadAmount] = useState("0");
+  const [cloneLoadWeight, setCloneLoadWeight] = useState("0");
   const [cloneStartTime, setCloneStartTime] = useState(NEW_LOCALE_TIME);
 
   useEffect(() => {
@@ -65,25 +65,25 @@ export default function ModalUpdateOrder(props) {
       setStartTime(dataUpdate.start_time);
       setStartPoint(dataUpdate.start_point);
       setEndPoint(dataUpdate.end_point);
-      setLoadAmount(dataUpdate.load_amount);
+      setLoadWeight(dataUpdate.load_weight);
       setLoadName(dataUpdate.load_name);
 
-      setCloneLoadAmount(dataUpdate.load_amount);
+      setCloneLoadWeight(dataUpdate.load_weight);
       setCloneStartTime(dataUpdate.start_time);
     }
   }, [dataUpdate]);
 
   const handleSubmitUpdateOrder = async () => {
-    const loadAmountStr = String(load_amount);
+    const loadWeightStr = String(load_weight);
 
     if (
-      parseFloat(loadAmountStr) < 0 ||
-      loadAmountStr.includes("-") ||
-      !loadAmountStr
+      parseFloat(loadWeightStr) < 0 ||
+      loadWeightStr.includes("-") ||
+      !loadWeightStr
     ) {
       setShowWarningMsg(true);
-      setWarningMsg("Load amount must not be negative or contain minus sign!");
-      setLoadAmount(cloneLoadAmount);
+      setWarningMsg("Load weight must not be negative or contain minus sign!");
+      setLoadWeight(cloneLoadWeight);
       return;
     }
 
@@ -105,7 +105,7 @@ export default function ModalUpdateOrder(props) {
       start_time,
       start_point,
       end_point,
-      load_amount,
+      load_weight,
       load_name,
     };
 
@@ -235,14 +235,14 @@ export default function ModalUpdateOrder(props) {
             </label>
             <label className="form-control w-full max-w-xs">
               <div className="label">
-                <span className="label-text">Load amount (kilograms)</span>
+                <span className="label-text">Load weight (kilograms)</span>
               </div>
               <input
                 type="number"
                 min="0"
                 className="input input-bordered input-warning w-full max-w-xs"
-                value={load_amount}
-                onChange={(event) => setLoadAmount(event.target.value)}
+                value={load_weight}
+                onChange={(event) => setLoadWeight(event.target.value)}
               />
             </label>
             {showWarningMsg == true && (

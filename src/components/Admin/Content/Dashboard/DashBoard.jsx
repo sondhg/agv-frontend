@@ -1,7 +1,6 @@
 import PropTypes from "prop-types";
 import { useEffect, useMemo, useState } from "react";
 import useWebSocket from "react-use-websocket";
-import testSocketBinance from "../../../../assets/images/testing/testSocketBinance.png";
 import SpeedLineChart from "./components/SpeedLineChart";
 import StatsBox from "./components/StatsBox";
 
@@ -60,10 +59,6 @@ export default function Dashboard() {
 
   return (
     <div>
-      <div className="hidden">
-        See {testSocketBinance} to know WS link that I use for test
-      </div>
-      {/* the div element above is hidden */}
       <div className="space-y-10">
         <h2 className="my-1 text-3xl font-bold">Dashboard</h2>
         <StatsBoxContainer dataSocket={dataSocket} />

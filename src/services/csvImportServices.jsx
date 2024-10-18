@@ -32,7 +32,7 @@ const handleImportCSV = (
               rawCSV[0][3] !== "start_point" ||
               rawCSV[0][4] !== "end_point" ||
               rawCSV[0][5] !== "load_name" ||
-              rawCSV[0][6] !== "load_amount"
+              rawCSV[0][6] !== "load_weight"
             ) {
               // toast.error("Wrong Header format in CSV file!");
               setShowWarningMsg(true);
@@ -49,7 +49,7 @@ const handleImportCSV = (
                   obj.start_point = item[3];
                   obj.end_point = item[4];
                   obj.load_name = item[5];
-                  obj.load_amount = item[6];
+                  obj.load_weight = item[6];
                   result.push(obj);
                 }
               });

@@ -54,7 +54,7 @@ export default function ManageOrder() {
         "start_point",
         "end_point",
         "load_name",
-        "load_amount",
+        "load_weight",
       ]);
       listOrders.map((item) => {
         let arr = [];
@@ -64,7 +64,7 @@ export default function ManageOrder() {
         arr[3] = item.start_point;
         arr[4] = item.end_point;
         arr[5] = item.load_name;
-        arr[6] = item.load_amount;
+        arr[6] = item.load_weight;
         result.push(arr);
       });
       setDataExport(result);
@@ -122,10 +122,7 @@ export default function ManageOrder() {
               <i className="fa-solid fa-file-export"></i>
               <span>Export CSV</span>
             </CSVLink>
-            <label
-              data-theme="light"
-              className="input input-bordered flex items-center gap-2"
-            >
+            <label className="input input-bordered flex items-center gap-2 bg-white text-black">
               <input
                 type="text"
                 className="grow"

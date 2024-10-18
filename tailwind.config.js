@@ -39,4 +39,7 @@ export default {
   },
 
   plugins: [daisyui, tailwindcssAnimate],
+  daisyui: {
+    themes: ["dark"],
+  },
 };

@@ -28,9 +28,9 @@ export default function Layout() {
             path="/admin"
             // ! tạm tắt private route để xem đc Admin, khi hoàn thành all thì uncomment
             element={
-              <PrivateRoute>
+              // <PrivateRoute>
                 <Admin />
-              </PrivateRoute>
+              // </PrivateRoute>
             }
           >
             <Route index element={<Dashboard />} />

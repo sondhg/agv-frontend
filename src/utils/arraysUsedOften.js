@@ -21,6 +21,6 @@ export const inputFields = [
   "start_time",
   "start_point",
   "end_point",
-  "load_amount",
+  "load_weight",
   "load_name",
 ];

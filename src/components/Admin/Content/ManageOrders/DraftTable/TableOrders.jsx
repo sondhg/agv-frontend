@@ -166,7 +166,7 @@ export default function TableOrders(props) {
             <th scope="col">From node</th>
             <th scope="col">To node</th>
             <th scope="col">Load name</th>
-            <th scope="col">Load amount</th>
+            <th scope="col">Load weight</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -194,7 +194,7 @@ export default function TableOrders(props) {
                 <td>Node {item.start_point}</td>
                 <td>Node {item.end_point}</td>
                 <td>{item.load_name}</td>
-                <td>{item.load_amount} kg</td>
+                <td>{item.load_weight} kg</td>
                 <td className="actions-cell">
                   <button
                     className="btn btn-warning btn-sm"

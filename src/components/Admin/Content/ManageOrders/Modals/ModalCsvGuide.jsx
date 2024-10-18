@@ -21,39 +21,50 @@ export default function ModalCsvGuide(props) {
   };
 
   return (
-    <dialog data-theme="light" id="modal-csv-guide" className="modal">
+    <dialog id="modal-csv-guide" className="modal">
       <div className="modal-box w-11/12 max-w-5xl">
-        <h1 data-theme="light" className="text-xl font-bold">
-          Correct CSV file format
-        </h1>
+        <h1 className="mb-2 text-xl font-bold">Correct CSV file format</h1>
         <div className="space-y-5">
           <div role="alert" className="alert shadow-lg">
             <InfoIconSVG />
             <span>
-              Imported .csv file must have a <b>header row</b> containing the{" "}
-              <b>exact variable names</b>, in the <b>exact order</b> from left
-              to right, as shown in the{" "}
-              <span className="text-danger">example</span> below:
+              File must have a <b>header row</b> containing the{" "}
+              <b>exact column names</b>, in the <b>exact order</b> from left to
+              right, as shown below:
             </span>
           </div>
-          <div className="grid place-content-center shadow-xl">
-            <img src={csvExample} />
-          </div>
-          <div className="grid place-content-center shadow-xl">
-            <img src={csvExample2} />
+
+          <div className="mockup-code">
+            <pre data-prefix="$" className="text-success">
+              <code>
+                agv_id,order_date,start_time,start_point,end_point,load_name,load_weight
+              </code>
+            </pre>
+            <pre data-prefix="$">
+              <code>1,7/29/2024,16:30:00,1,3,Stone,5</code>
+            </pre>
+            <pre data-prefix="$">
+              <code>3,7/29/2024,16:35:00,9,4,Steel,10</code>
+            </pre>
+            <pre data-prefix="$">
+              <code>2,7/30/2024,09:00:00,2,8,Cement,2</code>
+            </pre>
           </div>
           <div role="alert" className="alert shadow-lg">
             <InfoIconSVG />
             <span>
-              <code>order_date</code> should be in format:{" "}
-              <code>date/month/year</code> (<b>dd/MM/yyyy</b>)
+              <code className="text-success">order_date</code> should be in
+              format: <code className="text-primary">dd/MM/yyyy</code> (
+              <b>date/month/year</b>)
             </span>
           </div>
           <div role="alert" className="alert shadow-lg">
             <InfoIconSVG />
             <span>
-              <code>start_time</code> should be in 24-hour format, specifically:{" "}
-              <code>hour:minute:second</code> (<b>HH:mm:ss</b>)
+              <code className="text-success">start_time</code> should be in
+              23-hour format (from 00:00:00 to 23:59:59), specifically:{" "}
+              <code className="text-primary">HH:mm:ss</code> (
+              <b>hour:minute:second</b>)
             </span>
           </div>
           {showWarningMsg == true && (
@@ -90,7 +101,6 @@ export default function ModalCsvGuide(props) {
           <form method="dialog">
             {/* if there is a button, it will close the modal */}
             <button
-              data-theme="light"
               className="btn btn-circle btn-sm absolute right-2 top-2"
               onClick={handleClose}
             >
