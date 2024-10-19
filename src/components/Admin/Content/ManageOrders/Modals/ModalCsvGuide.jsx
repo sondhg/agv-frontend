@@ -39,21 +39,21 @@ export default function ModalCsvGuide(props) {
               </code>
             </pre>
             <pre data-prefix="$">
-              <code>7/29/2024,16:30:00,1,3,Stone,5</code>
+              <code>12/20/2024,16:30:00,1,3,Stone,5</code>
             </pre>
             <pre data-prefix="$">
-              <code>7/29/2024,16:35:00,9,4,Steel,10</code>
+              <code>12/20/2024,16:35:00,9,4,Steel,10</code>
             </pre>
             <pre data-prefix="$">
-              <code>7/30/2024,09:00:00,2,8,Cement,2</code>
+              <code>12/21/2024,09:00:00,2,8,Cement,2</code>
             </pre>
           </div>
           <div role="alert" className="alert shadow-lg">
             <InfoIconSVG />
             <span>
               <code className="text-success">order_date</code> should be in
-              format: <code className="text-primary">dd/MM/yyyy</code> (
-              <b>date/month/year</b>)
+              format: <code className="text-primary">MM/dd/yyyy</code> (
+              <b>month/date/year</b>)
             </span>
           </div>
           <div role="alert" className="alert shadow-lg">
