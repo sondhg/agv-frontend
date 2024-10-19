@@ -95,7 +95,7 @@ export default function ModalUpdateOrder(props) {
     }
 
     let orderWithID = {
-      id: dataUpdate.id,
+      order_id: dataUpdate.order_id,
       order_date,
       start_time,
       start_point,

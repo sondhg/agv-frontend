@@ -10,7 +10,7 @@ export default function ModalDeleteOrder(props) {
   };
 
   const handleSubmitDeleteOrder = async () => {
-    let res = await deleteOrder(dataDelete.id);
+    let res = await deleteOrder(dataDelete.order_id);
 
     if (res) {
       toast.success("Deleted!");

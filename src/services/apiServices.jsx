@@ -10,11 +10,11 @@ const getAllOrders = () => {
 };
 
 const putUpdateOrder = (order) => {
-  return axios.put(`/orders/${order.id}/`, order);
+  return axios.put(`/orders/${order.order_id}/`, order);
 };
 
 const deleteOrder = (orderId) => {
-  return axios.delete(`/orders/${orderId}/`, { data: { id: orderId } });
+  return axios.delete(`/orders/${orderId}/`, { data: { order_id: orderId } });
 };
 
 const postLogin = (email, password) => {

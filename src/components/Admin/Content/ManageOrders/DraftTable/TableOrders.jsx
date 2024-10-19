@@ -14,7 +14,7 @@ export default function TableOrders(props) {
 
   // search bar
   const [sortBy, setSortBy] = useState("asc");
-  const [sortField, setSortField] = useState("id");
+  const [sortField, setSortField] = useState("order_id");
 
   // State to hold the cloned list of orders
   const [clonedListOrders, setClonedListOrders] = useState(
@@ -57,7 +57,7 @@ export default function TableOrders(props) {
 
   const handleCheckbox = (event, item) => {
     const updatedOrders = clonedListOrders.map((order) =>
-      order.id === item.id
+      order.order_id === item.order_id
         ? {
             ...order,
             selected: event.target.checked,
@@ -78,7 +78,7 @@ export default function TableOrders(props) {
 
     // Delete selected orders from the database
     for (const order of selectedOrders) {
-      await deleteOrder(order.id);
+      await deleteOrder(order.order_id);
     }
 
     setClonedListOrders(updatedOrders);
@@ -172,7 +172,7 @@ export default function TableOrders(props) {
                     />
                   </label>
                 </th>
-                <td className="font-bold">{item.id}</td>
+                <td className="font-bold">{item.order_id}</td>
                 <td>{item.order_date}</td>
                 <td>{item.start_time}</td>
                 <td>Node {item.start_point}</td>
