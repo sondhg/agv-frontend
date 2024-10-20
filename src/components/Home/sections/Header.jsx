@@ -111,18 +111,19 @@ export default function Header() {
           </>
         ) : (
           <>
-            <NavLink to="/admin">
-              <button className="btn btn-accent">Dashboard </button>
+            {/* <NavLink to="/admin">
+              <button className="btn btn-accent">Dashboard</button>
             </NavLink>
 
             <NavLink to="/admin/manage-orders">
               <button className="btn btn-accent">Manage Orders</button>
             </NavLink>
 
-            <button
-              className="btn btn-error btn-sm"
-              onClick={() => handleLogOut()}
-            >
+            <NavLink to="/admin/schedules">
+              <button className="btn btn-accent">Schedules</button>
+            </NavLink> */}
+
+            <button className="btn btn-error" onClick={() => handleLogOut()}>
               Log out
             </button>
           </>

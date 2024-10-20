@@ -9,6 +9,7 @@ import Login from "./components/Auth/Login";
 import Register from "./components/Auth/Register";
 import Home from "./components/Home/Home";
 import PrivateRoute from "./routes/PrivateRoute";
+import Schedules from "./components/Admin/Content/Schedules/Schedules";
 
 const NotFound = () => {
   return (
@@ -29,12 +30,13 @@ export default function Layout() {
             // ! tạm tắt private route để xem đc Admin, khi hoàn thành all thì uncomment
             element={
               // <PrivateRoute>
-                <Admin />
+              <Admin />
               // </PrivateRoute>
             }
           >
             <Route index element={<Dashboard />} />
             <Route path="manage-orders" element={<ManageOrder />} />
+            <Route path="schedules" element={<Schedules />} />
           </Route>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/register" element={<Register />}></Route>

@@ -188,6 +188,12 @@ export default function SideBar() {
               >
                 Manage Orders
               </MenuItem>
+              <MenuItem
+                icon={<i className="fa-solid fa-calendar-days"></i>}
+                component={<Link to="/admin/schedules" />}
+              >
+                Schedules
+              </MenuItem>
             </Menu>
 
             <div className="mb-2 mt-8 px-6 py-0">
