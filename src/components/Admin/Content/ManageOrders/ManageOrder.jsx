@@ -143,7 +143,7 @@ export default function ManageOrder() {
           </div>
         </div>
 
-        <div className="table-orders-container overflow-x-auto">
+        <div className="overflow-x-auto">
           <TableOrders
             listOrders={listOrders}
             setListOrders={setListOrders}

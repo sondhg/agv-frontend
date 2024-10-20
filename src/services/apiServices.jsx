@@ -36,6 +36,10 @@ const postLogout = (email, refresh_token) => {
   return axios.post("/logout", { email, refresh_token });
 };
 
+const getAllSchedules = () => {
+  return axios.get("/schedules/");
+};
+
 export {
   // orders
   getAllOrders,
@@ -47,4 +51,7 @@ export {
   postLogin,
   postRegister,
   postLogout,
+
+  // schedules
+  getAllSchedules,
 };

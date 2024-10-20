@@ -148,8 +148,8 @@ export default function TableOrders(props) {
                 <span>Start time</span>
               </div>
             </th>
-            <th scope="col">From node</th>
-            <th scope="col">To node</th>
+            <th scope="col">Start point</th>
+            <th scope="col">End point</th>
             <th scope="col">Load name</th>
             <th scope="col">Load weight</th>
             <th>Action</th>
@@ -179,15 +179,15 @@ export default function TableOrders(props) {
                 <td>Node {item.end_point}</td>
                 <td>{item.load_name}</td>
                 <td>{item.load_weight} kg</td>
-                <td className="actions-cell">
+                <td className="flex space-x-2">
                   <button
-                    className="btn btn-warning btn-sm"
+                    className="btn btn-warning btn-sm w-1/2"
                     onClick={() => handleClickBtnUpdate(item)}
                   >
                     Update
                   </button>
                   <button
-                    className="btn btn-error btn-sm"
+                    className="btn btn-error btn-sm w-1/2"
                     onClick={() => handleClickBtnDelete(item)}
                   >
                     Delete

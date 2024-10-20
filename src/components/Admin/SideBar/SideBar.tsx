@@ -8,7 +8,6 @@ import {
   SubMenu,
 } from "react-pro-sidebar";
 import { Link } from "react-router-dom";
-import "../Admin.scss";
 import { SidebarFooter } from "./components/SidebarFooter";
 import { SidebarHeader } from "./components/SidebarHeader";
 import { Typography } from "./components/Typography";

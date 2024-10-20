@@ -1,18 +1,14 @@
 import { Outlet } from "react-router-dom";
-import "./Admin.scss";
 import SideBar from "./SideBar/SideBar";
 
 export default function Admin() {
   return (
-    <div className="admin-container">
-      <div className="admin-sidebar">
+    <div className="grid grid-cols-[auto_1fr]">
+      <div className="sticky top-0 h-screen self-start">
         <SideBar />
       </div>
-      <div className="admin-content">
-        <div className="admin-header"></div>
-        <div className="admin-main">
-          <Outlet />
-        </div>
+      <div className="p-7">
+        <Outlet />
       </div>
     </div>
   );

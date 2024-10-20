@@ -30,10 +30,10 @@ export default function ModalDeleteOrder(props) {
             Start time: <b>{dataDelete.start_time}</b>
           </li>
           <li>
-            From node: <b>{dataDelete.start_point}</b>
+            Start point: <b>{dataDelete.start_point}</b>
           </li>
           <li>
-            To node: <b>{dataDelete.end_point}</b>
+            End point: <b>{dataDelete.end_point}</b>
           </li>
           <li>
             Load name: <b>{dataDelete.load_name}</b>

@@ -1,3 +1,9 @@
+// Define variables at the top of Auth.scss
+$accent-color: #8672ff;
+$base-color: white;
+$text-color: #2e2b41;
+$input-color: #f3f0ff;
+
 .login-register-container {
   max-height: 100vh;
   background-image: url(background.jpg);
@@ -7,7 +13,7 @@
 
 .wrapper {
   box-sizing: border-box;
-  background-color: var(--base-color);
+  background-color: $base-color;
   height: 100vh;
   width: max(40%, 600px); // ! bỏ đi nếu muốn full chiều rộng
   padding: 10px;
@@ -36,9 +42,9 @@
   flex-shrink: 0;
   height: 50px;
   width: 50px;
-  background-color: var(--accent-color);
-  fill: var(--base-color);
-  color: var(--base-color);
+  background-color: $accent-color;
+  fill: $base-color;
+  color: $base-color;
   border-radius: 10px 0 0 10px;
   display: flex;
   justify-content: center;
@@ -55,28 +61,28 @@
   padding: 1em;
   font: inherit;
   border-radius: 0 10px 10px 0;
-  border: 2px solid var(--input-color);
+  border: 2px solid $input-color;
   border-left: none;
-  background-color: var(--input-color);
+  background-color: $input-color;
   transition: 150ms ease;
   color: black;
 }
 
 .login-register-form input:hover {
-  border-color: var(--accent-color);
+  border-color: $accent-color;
 }
 
 .login-register-form input:focus {
   outline: none;
-  border-color: var(--text-color);
+  border-color: $text-color;
 }
 
 .div-to-label:has(input:focus) > label {
-  background-color: var(--text-color);
+  background-color: $text-color;
 }
 
 .login-register-form input::placeholder {
-  color: var(--text-color);
+  color: $text-color;
 }
 
 @media (max-width: 1100px) {
