@@ -1,7 +1,7 @@
 import cloneDeep from "lodash/cloneDeep";
 import orderBy from "lodash/orderBy";
 import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { deleteOrder } from "../../../../../services/apiServices";
 
 export default function TableOrders(props) {
@@ -11,6 +11,17 @@ export default function TableOrders(props) {
     handleClickBtnUpdate,
     handleClickBtnDelete,
   } = props;
+
+  // auto adjust colSpan
+  const tableRef = useRef(null);
+  const [colSpan, setColSpan] = useState(1);
+
+  useEffect(() => {
+    if (tableRef.current) {
+      const columnCount = tableRef.current.rows[0].cells.length;
+      setColSpan(columnCount);
+    }
+  }, []);
 
   // search bar
   const [sortBy, setSortBy] = useState("asc");
@@ -36,7 +47,7 @@ export default function TableOrders(props) {
     setSortField(newSortField);
   };
 
-  // actually this is sort by date and time (default sort of django orders_draft)
+  // Remove sorting, back to whichever default order by server
   const removeSorting = () => {
     setClonedListOrders(listOrders);
   };
@@ -110,7 +121,7 @@ export default function TableOrders(props) {
         </div>
       </div>
 
-      <table className="table table-xs">
+      <table ref={tableRef} className="table table-xs">
         <thead>
           <tr>
             <th>
@@ -138,30 +149,20 @@ export default function TableOrders(props) {
                 </span>
               </div>
             </th>
-            <th scope="col">
-              <div className="flex justify-between">
-                <span>Order date</span>
-              </div>
-            </th>
-            <th scope="col">
-              <div className="flex justify-between">
-                <span>Start time</span>
-              </div>
-            </th>
+            <th scope="col">Order date</th>
+            <th scope="col">Start time</th>
             <th scope="col">Start point</th>
             <th scope="col">End point</th>
             <th scope="col">Load name</th>
+            <th scope="col">Load amount</th>
             <th scope="col">Load weight</th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody>
-          {clonedListOrders && clonedListOrders.length > 0 ? (
+          {Array.isArray(clonedListOrders) && clonedListOrders.length > 0 ? (
             clonedListOrders.map((item, index) => (
-              <tr
-                key={`table-orders-${index}`}
-                className={item.highlighted ? "bg-neutral" : ""}
-              >
+              <tr key={index} className={item.highlighted ? "bg-neutral" : ""}>
                 <th>
                   <label>
                     <input
@@ -175,10 +176,12 @@ export default function TableOrders(props) {
                 <td className="font-bold">{item.order_id}</td>
                 <td>{item.order_date}</td>
                 <td>{item.start_time}</td>
-                <td>Node {item.start_point}</td>
-                <td>Node {item.end_point}</td>
+                <td>{`Point ${item.start_point}`}</td>
+                <td>{`Point ${item.end_point}`}</td>
                 <td>{item.load_name}</td>
-                <td>{item.load_weight} kg</td>
+                <td>{`${item.load_amount} units`}</td>
+                <td>{`${item.load_weight} kg`}</td>
+
                 <td className="flex space-x-2">
                   <button
                     className="btn btn-warning btn-sm w-1/2"
@@ -197,7 +200,7 @@ export default function TableOrders(props) {
             ))
           ) : (
             <tr>
-              <td colSpan={"10"}>Data not found</td>
+              <td colSpan={colSpan}>Data not found</td>
             </tr>
           )}
         </tbody>

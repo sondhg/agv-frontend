@@ -39,7 +39,10 @@ export default function ModalDeleteOrder(props) {
             Load name: <b>{dataDelete.load_name}</b>
           </li>
           <li>
-            Load weight: <b>{dataDelete.load_weight}</b>
+            Load amount: <b>{`${dataDelete.load_amount} units`}</b>
+          </li>
+          <li>
+            Load weight: <b>{`${dataDelete.load_weight} kg`}</b>
           </li>
         </ul>
         {/* luôn đặt modal-action phía dưới cùng */}

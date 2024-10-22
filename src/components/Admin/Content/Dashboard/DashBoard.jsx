@@ -59,11 +59,9 @@ export default function Dashboard() {
 
   return (
     <div>
-      <div className="space-y-10">
-        <h2 className="my-1 text-3xl font-bold">Dashboard</h2>
+      <div className="space-y-5">
+        <h2 className="text-3xl font-bold">Dashboard</h2>
         <StatsBoxContainer dataSocket={dataSocket} />
-      </div>
-      <div className="mt-10">
         <SpeedLineChart dataSocket={dataSocket} />
       </div>
     </div>

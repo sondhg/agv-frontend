@@ -37,20 +37,25 @@ export default function ModalUpdateOrder(props) {
     setStartTime(NEW_LOCALE_TIME);
     setStartPoint(startPoints[0]);
     setEndPoint(endPoints[0]);
-    setLoadWeight("0");
     setLoadName(loadNames[0]);
+    setLoadAmount(0);
+    setLoadWeight(0);
     resetUpdateData();
   };
 
   const [start_point, setStartPoint] = useState(startPoints[0]);
   const [end_point, setEndPoint] = useState(endPoints[0]);
+
   const [load_name, setLoadName] = useState(loadNames[0]);
-  const [load_weight, setLoadWeight] = useState("0");
+  const [load_amount, setLoadAmount] = useState(0);
+  const [load_weight, setLoadWeight] = useState(0);
+
   const [originalDate, setOriginalDate] = useState(NEW_DATE);
   const [order_date, setOrderDate] = useState(NEW_LOCALE_DATE);
   const [start_time, setStartTime] = useState(NEW_LOCALE_TIME);
 
-  const [cloneLoadWeight, setCloneLoadWeight] = useState("0");
+  const [cloneLoadAmount, setCloneLoadAmount] = useState(0);
+  const [cloneLoadWeight, setCloneLoadWeight] = useState(0);
   const [cloneStartTime, setCloneStartTime] = useState(NEW_LOCALE_TIME);
 
   useEffect(() => {
@@ -61,25 +66,27 @@ export default function ModalUpdateOrder(props) {
       setStartTime(dataUpdate.start_time);
       setStartPoint(dataUpdate.start_point);
       setEndPoint(dataUpdate.end_point);
-      setLoadWeight(dataUpdate.load_weight);
+      setLoadAmount(dataUpdate.load_amount);
       setLoadName(dataUpdate.load_name);
 
+      setCloneLoadAmount(dataUpdate.load_amount);
       setCloneLoadWeight(dataUpdate.load_weight);
       setCloneStartTime(dataUpdate.start_time);
     }
   }, [dataUpdate]);
 
   const handleSubmitUpdateOrder = async () => {
-    const loadWeightStr = String(load_weight);
+    const loadAmountStr = String(load_amount);
 
     if (
-      parseFloat(loadWeightStr) < 0 ||
-      loadWeightStr.includes("-") ||
-      !loadWeightStr
+      parseFloat(loadAmountStr) < 0 ||
+      loadAmountStr.includes("-") ||
+      !loadAmountStr
     ) {
       setShowWarningMsg(true);
-      setWarningMsg("Load weight must not be negative or contain minus sign!");
-      setLoadWeight(cloneLoadWeight);
+      setWarningMsg("Load amount must not be negative or contain minus sign!");
+      setLoadAmount(cloneLoadAmount);
+      // setLoadWeight(cloneLoadWeight);
       return;
     }
 
@@ -100,8 +107,9 @@ export default function ModalUpdateOrder(props) {
       start_time,
       start_point,
       end_point,
-      load_weight,
       load_name,
+      load_amount,
+      load_weight,
     };
 
     let res = await putUpdateOrder(orderWithID);
@@ -113,6 +121,18 @@ export default function ModalUpdateOrder(props) {
       await fetchListOrders();
     }
   };
+
+  useEffect(() => {
+    let weightPerUnit = 0;
+    if (load_name === "Stone") {
+      weightPerUnit = 1;
+    } else if (load_name === "Iron") {
+      weightPerUnit = 2;
+    } else if (load_name === "Cement") {
+      weightPerUnit = 3;
+    }
+    setLoadWeight(weightPerUnit * load_amount);
+  }, [load_name, load_amount]);
 
   return (
     <dialog id="modal-update-order" className="modal">
@@ -129,6 +149,7 @@ export default function ModalUpdateOrder(props) {
                   title="Please enter date in MM/dd/yyyy format (e.g., 12/31/2024)"
                   className="select select-bordered select-warning"
                   toggleCalendarOnIconClick
+                  preventOpenOnFocus
                   customInput={
                     <input
                       maxLength={10}
@@ -146,6 +167,7 @@ export default function ModalUpdateOrder(props) {
                 />
               </div>
             </label>
+
             <label className="form-control w-full max-w-xs">
               <div className="label">
                 <span className="label-text">Start time</span>
@@ -160,6 +182,7 @@ export default function ModalUpdateOrder(props) {
                 title="Please enter time in hh:mm:ss format (e.g., 14:30:00)"
               />
             </label>
+
             <label className="form-control w-full max-w-xs">
               <div className="label">
                 <span className="label-text">Start point</span>
@@ -177,6 +200,7 @@ export default function ModalUpdateOrder(props) {
                 ))}
               </select>
             </label>
+
             <label className="form-control w-full max-w-xs">
               <div className="label">
                 <span className="label-text">End point</span>
@@ -194,6 +218,7 @@ export default function ModalUpdateOrder(props) {
                 ))}
               </select>
             </label>
+
             <label className="form-control w-full max-w-xs">
               <div className="label">
                 <span className="label-text">Load name</span>
@@ -211,18 +236,32 @@ export default function ModalUpdateOrder(props) {
                 ))}
               </select>
             </label>
+
             <label className="form-control w-full max-w-xs">
               <div className="label">
-                <span className="label-text">Load weight (kilograms)</span>
+                <span className="label-text">Load amount</span>
               </div>
               <input
                 type="number"
-                min="0"
+                min={0}
                 className="input input-bordered input-warning w-full max-w-xs"
-                value={load_weight}
-                onChange={(event) => setLoadWeight(event.target.value)}
+                value={load_amount}
+                onChange={(event) => setLoadAmount(event.target.value)}
               />
             </label>
+
+            <label className="form-control w-full max-w-xs">
+              <div className="label">
+                <span className="label-text">Load weight (calculated)</span>
+              </div>
+              <input
+                type="number"
+                className="input input-bordered w-full max-w-xs"
+                value={load_weight}
+                readOnly
+              />
+            </label>
+
             {showWarningMsg == true && (
               <div role="alert" className="alert alert-warning col-span-2 my-2">
                 <WarningIconSVG />

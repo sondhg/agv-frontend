@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { toast } from "react-toastify";
@@ -27,8 +27,11 @@ export default function ModalCreateOrder(props) {
 
   const [start_point, setStartPoint] = useState(startPoints[0]);
   const [end_point, setEndPoint] = useState(endPoints[0]);
-  const [load_name, setLoadName] = useState(loadNames[0]);
-  const [load_weight, setLoadWeight] = useState("0");
+
+  const [load_name, setload_name] = useState(loadNames[0]);
+  const [load_amount, setload_amount] = useState(0);
+  const [load_weight, setLoadWeight] = useState(0);
+
   const [originalDate, setOriginalDate] = useState(NEW_DATE);
   const [order_date, setOrderDate] = useState(NEW_LOCALE_DATE);
   const [start_time, setStartTime] = useState(NEW_LOCALE_TIME);
@@ -47,16 +50,22 @@ export default function ModalCreateOrder(props) {
     setStartTime(NEW_LOCALE_TIME);
     setStartPoint(startPoints[0]);
     setEndPoint(endPoints[0]);
-    setLoadWeight("0");
-    setLoadName(loadNames[0]);
+    setload_amount(0);
+    setload_name(loadNames[0]);
   };
 
   const handleSubmitCreateOrder = async () => {
-    if (load_weight < 0 || load_weight.includes("-") === true || !load_weight) {
-      setShowWarningMsg(true);
-      setWarningMsg("Load weight must not be negative or contain minus sign!");
+    const loadAmountStr = String(load_amount);
 
-      setLoadWeight("0");
+    if (
+      parseFloat(loadAmountStr) < 0 ||
+      loadAmountStr.includes("-") ||
+      !loadAmountStr
+    ) {
+      setShowWarningMsg(true);
+      setWarningMsg("Load amount must not be negative or contain minus sign!");
+
+      setload_amount(0);
       return;
     }
 
@@ -76,8 +85,9 @@ export default function ModalCreateOrder(props) {
       start_time,
       start_point,
       end_point,
-      load_weight,
       load_name,
+      load_amount,
+      load_weight,
     };
 
     let res = await postCreateOrder(order);
@@ -89,6 +99,18 @@ export default function ModalCreateOrder(props) {
       await fetchListOrders();
     }
   };
+
+  useEffect(() => {
+    let weightPerUnit = 0;
+    if (load_name === "Stone") {
+      weightPerUnit = 1;
+    } else if (load_name === "Cement") {
+      weightPerUnit = 2;
+    } else if (load_name === "Iron") {
+      weightPerUnit = 3;
+    }
+    setLoadWeight(weightPerUnit * load_amount);
+  }, [load_name, load_amount]);
 
   return (
     <dialog id="modal-create-order" className="modal">
@@ -105,6 +127,7 @@ export default function ModalCreateOrder(props) {
                   title="Please enter date in MM/dd/yyyy format (e.g., 12/31/2024)"
                   className="select select-bordered select-accent"
                   toggleCalendarOnIconClick
+                  preventOpenOnFocus
                   customInput={
                     <input
                       maxLength={10}
@@ -182,7 +205,7 @@ export default function ModalCreateOrder(props) {
                 className="select select-bordered select-accent"
                 value={load_name}
                 type="number"
-                onChange={(event) => setLoadName(event.target.value)}
+                onChange={(event) => setload_name(event.target.value)}
               >
                 {loadNames.map((item) => (
                   <option key={item} value={item}>
@@ -191,18 +214,32 @@ export default function ModalCreateOrder(props) {
                 ))}
               </select>
             </label>
+
             <label className="form-control w-full max-w-xs">
               <div className="label">
-                <span className="label-text">Load weight (kilograms)</span>
+                <span className="label-text">Load amount</span>
               </div>
               <input
                 type="number"
-                min="0"
+                min={0}
                 className="input input-bordered input-accent w-full max-w-xs"
-                value={load_weight}
-                onChange={(event) => setLoadWeight(event.target.value)}
+                value={load_amount}
+                onChange={(event) => setload_amount(event.target.value)}
               />
             </label>
+
+            <label className="form-control w-full max-w-xs">
+              <div className="label">
+                <span className="label-text">Load weight (calculated)</span>
+              </div>
+              <input
+                type="number"
+                className="input input-bordered w-full max-w-xs"
+                value={load_weight}
+                readOnly
+              />
+            </label>
+
             {showWarningMsg == true && (
               <div role="alert" className="alert alert-warning col-span-2 my-2">
                 <WarningIconSVG />

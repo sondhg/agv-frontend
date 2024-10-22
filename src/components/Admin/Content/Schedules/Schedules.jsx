@@ -1,10 +1,26 @@
+import { useEffect, useState } from "react";
+import { getAllSchedules } from "../../../../services/apiServices";
 import TableSchedules from "./components/TableSchedules";
 
 export default function Schedules() {
+  const [listSchedules, setListSchedules] = useState([]);
+
+  const fetchListSchedules = async () => {
+    let res = await getAllSchedules();
+    console.log(">>> res: ", res);
+    setListSchedules(res);
+  };
+
+  useEffect(() => {
+    fetchListSchedules();
+  }, []);
+
   return (
     <div>
-      <h2 className="my-1 text-3xl font-bold">Schedules</h2>
-      <TableSchedules />
+      <div className="space-y-5">
+        <h2 className="text-3xl font-bold">Schedules</h2>
+        <TableSchedules listSchedules={listSchedules} />
+      </div>
     </div>
   );
 }

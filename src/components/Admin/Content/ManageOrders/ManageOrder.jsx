@@ -53,7 +53,7 @@ export default function ManageOrder() {
         "start_point",
         "end_point",
         "load_name",
-        "load_weight",
+        "load_amount",
       ]);
       listOrders.map((item) => {
         let arr = [];
@@ -62,7 +62,7 @@ export default function ManageOrder() {
         arr[2] = item.start_point;
         arr[3] = item.end_point;
         arr[4] = item.load_name;
-        arr[5] = item.load_weight;
+        arr[5] = item.load_amount;
         result.push(arr);
       });
       setDataExport(result);
@@ -87,9 +87,9 @@ export default function ManageOrder() {
 
   // console.log(">>> a: ", a); //*dòng này dùng test lỗi: code sai thay vì nát UI thì sẽ đẩy sang fallback UI nhờ react-error-boundary
   return (
-    <div>
-      <h2 className="my-1 text-3xl font-bold">Manage Orders</h2>
-      <div className="-space-y-3">
+    <div className="space-y-5">
+      <h2 className="text-3xl font-bold">Manage Orders</h2>
+      <div>
         <div className="menu">
           <div className="menu menu-horizontal space-x-5 rounded-box">
             <button
