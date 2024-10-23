@@ -1,55 +1,126 @@
 import PropTypes from "prop-types";
 import { useEffect, useRef, useState } from "react";
 
-export default function TableSchedules(props) {
-  const { listSchedules } = props;
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
-  const tableRef = useRef(null);
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
+
+// ! remove this line when /api/schedules is ready
+import { listSchedules } from "./dummyData";
+
+export default function TableSchedules(props) {
+  // ! when /api/schedules is ready, uncomment this line and delete the dummy data import
+  // const { listSchedules } = props;
+
+  const tableSchedulesRef = useRef(null);
   const [colSpan, setColSpan] = useState(1);
 
   useEffect(() => {
-    if (tableRef.current) {
-      const columnCount = tableRef.current.rows[0].cells.length;
+    if (tableSchedulesRef.current) {
+      const columnCount = tableSchedulesRef.current.rows[0].cells.length;
       setColSpan(columnCount);
     }
   }, []);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const ROWS_PER_PAGE = 5; // number of rows per page
+
+  const indexOfLastRow = currentPage * ROWS_PER_PAGE;
+  const indexOfFirstRow = indexOfLastRow - ROWS_PER_PAGE;
+  const currentRows = listSchedules.slice(indexOfFirstRow, indexOfLastRow);
+
+  const totalPages = Math.ceil(listSchedules.length / ROWS_PER_PAGE);
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
   return (
-    <table className="table table-zebra table-xs" ref={tableRef}>
-      <thead>
-        <tr>
-          <th scope="col">Schedule ID</th>
-          <th scope="col">Order ID</th>
-          <th scope="col">Order date</th>
-          <th scope="col">Est. Start time</th>
-          <th scope="col">Est. End time</th>
-          <th scope="col">Start point</th>
-          <th scope="col">End point</th>
-          <th scope="col">Load name</th>
-          <th scope="col">Load amount</th>
-        </tr>
-      </thead>
-      <tbody>
-        {Array.isArray(listSchedules) && listSchedules.length > 0 ? (
-          listSchedules.map((item, index) => (
-            <tr key={index}>
-              <td>{item.schedule_id}</td>
-              <td>{item.order_id}</td>
-              <td>{item.order_date}</td>
-              <td>{item.est_start_time}</td>
-              <td>{item.est_end_time}</td>
-              <td>{item.start_point}</td>
-              <td>{item.end_point}</td>
-              <td>{item.load_name}</td>
-              <td>{item.load_amount}</td>
-            </tr>
-          ))
-        ) : (
-          <tr>
-            <td colSpan={colSpan}>Data not found</td>
-          </tr>
-        )}
-      </tbody>
-    </table>
+    <div className="relative min-h-96">
+      <Table ref={tableSchedulesRef}>
+        <TableHeader>
+          <TableRow>
+            <TableHead className="w-[120px]">Schedule ID</TableHead>
+            <TableHead>Order ID</TableHead>
+            <TableHead>Order date</TableHead>
+            <TableHead>Est. Start time</TableHead>
+            <TableHead>Est. End time</TableHead>
+            <TableHead>Start point</TableHead>
+            <TableHead>End point</TableHead>
+            <TableHead>Load name</TableHead>
+            <TableHead>Load amount</TableHead>
+            <TableHead className="text-right">Load weight</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {Array.isArray(currentRows) && currentRows.length > 0 ? (
+            currentRows.map((item, index) => (
+              <TableRow key={index}>
+                <TableCell className="font-medium">
+                  {item.schedule_id}
+                </TableCell>
+                <TableCell>{item.order_id}</TableCell>
+                <TableCell>{item.order_date}</TableCell>
+                <TableCell>{item.est_start_time}</TableCell>
+                <TableCell>{item.est_end_time}</TableCell>
+                <TableCell>{item.start_point}</TableCell>
+                <TableCell>{item.end_point}</TableCell>
+                <TableCell>{item.load_name}</TableCell>
+                <TableCell>{`${item.load_amount} units`}</TableCell>
+                <TableCell className="text-right">{`${item.load_weight} kg`}</TableCell>
+              </TableRow>
+            ))
+          ) : (
+            <TableRow>
+              <TableCell colSpan={colSpan}>No schedules available.</TableCell>
+            </TableRow>
+          )}
+        </TableBody>
+      </Table>
+
+      <Pagination className="absolute bottom-0 w-full">
+        <PaginationContent>
+          <PaginationItem>
+            <PaginationPrevious
+              onClick={handlePrevPage}
+              disabled={currentPage === 1}
+              className="cursor-pointer"
+            />
+          </PaginationItem>
+          <PaginationItem>
+            Page {currentPage} of {totalPages}
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationNext
+              onClick={handleNextPage}
+              disabled={currentPage === totalPages}
+              className="cursor-pointer"
+            />
+          </PaginationItem>
+        </PaginationContent>
+      </Pagination>
+    </div>
   );
 }
 

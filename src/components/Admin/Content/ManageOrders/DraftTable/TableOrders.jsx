@@ -1,3 +1,11 @@
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
+
 import cloneDeep from "lodash/cloneDeep";
 import orderBy from "lodash/orderBy";
 import PropTypes from "prop-types";
@@ -12,25 +20,27 @@ export default function TableOrders(props) {
     handleClickBtnDelete,
   } = props;
 
-  // auto adjust colSpan
-  const tableRef = useRef(null);
+  const [selectAll, setSelectAll] = useState(false);
+
+  const tableOrdersRef = useRef(null);
   const [colSpan, setColSpan] = useState(1);
 
-  useEffect(() => {
-    if (tableRef.current) {
-      const columnCount = tableRef.current.rows[0].cells.length;
-      setColSpan(columnCount);
-    }
-  }, []);
-
-  // search bar
   const [sortBy, setSortBy] = useState("asc");
   const [sortField, setSortField] = useState("order_id");
 
-  // State to hold the cloned list of orders
   const [clonedListOrders, setClonedListOrders] = useState(
     cloneDeep(listOrders),
   );
+
+  const [currentPage, setCurrentPage] = useState(1);
+
+  // auto adjust colSpan
+  useEffect(() => {
+    if (tableOrdersRef.current) {
+      const columnCount = tableOrdersRef.current.rows[0].cells.length;
+      setColSpan(columnCount);
+    }
+  }, []);
 
   // Clone listOrders whenever it changes
   useEffect(() => {
@@ -52,9 +62,7 @@ export default function TableOrders(props) {
     setClonedListOrders(listOrders);
   };
 
-  // select all checkboxes
-  const [selectAll, setSelectAll] = useState(false);
-
+  // select all checkboxes through header row checkbox
   const handleSelectAll = () => {
     const newSelectAll = !selectAll;
     setSelectAll(newSelectAll);
@@ -83,6 +91,7 @@ export default function TableOrders(props) {
     setSelectAll(allSelected);
   };
 
+  // mass delete
   const handleMassDelete = async () => {
     const selectedOrders = clonedListOrders.filter((order) => order.selected);
     const updatedOrders = clonedListOrders.filter((order) => !order.selected);
@@ -95,6 +104,27 @@ export default function TableOrders(props) {
     setClonedListOrders(updatedOrders);
     setListOrders(updatedOrders);
     setSelectAll(false); // Uncheck the "select all" checkbox after deletion
+  };
+
+  // pagination
+  const ROWS_PER_PAGE = 5; // number of rows per page
+
+  const indexOfLastRow = currentPage * ROWS_PER_PAGE;
+  const indexOfFirstRow = indexOfLastRow - ROWS_PER_PAGE;
+  const currentRows = clonedListOrders.slice(indexOfFirstRow, indexOfLastRow);
+
+  const totalPages = Math.ceil(listOrders.length / ROWS_PER_PAGE);
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
   };
 
   return (
@@ -120,91 +150,117 @@ export default function TableOrders(props) {
           </button>
         </div>
       </div>
-
-      <table ref={tableRef} className="table table-xs">
-        <thead>
-          <tr>
-            <th>
-              <label>
-                <input
-                  type="checkbox"
-                  className="checkbox-primary checkbox"
-                  checked={selectAll}
-                  onChange={handleSelectAll}
-                />
-              </label>
-            </th>
-            <th scope="col">
-              <div className="flex justify-between">
-                <span>Order ID</span>
-                <span>
-                  <i
-                    onClick={() => handleSort("desc", "id")}
-                    className="fa-solid fa-arrow-down mx-1 cursor-pointer"
-                  ></i>
-                  <i
-                    onClick={() => handleSort("asc", "id")}
-                    className="fa-solid fa-arrow-up mx-1 cursor-pointer"
-                  ></i>
-                </span>
-              </div>
-            </th>
-            <th scope="col">Order date</th>
-            <th scope="col">Start time</th>
-            <th scope="col">Start point</th>
-            <th scope="col">End point</th>
-            <th scope="col">Load name</th>
-            <th scope="col">Load amount</th>
-            <th scope="col">Load weight</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {Array.isArray(clonedListOrders) && clonedListOrders.length > 0 ? (
-            clonedListOrders.map((item, index) => (
-              <tr key={index} className={item.highlighted ? "bg-neutral" : ""}>
-                <th>
-                  <label>
-                    <input
-                      type="checkbox"
-                      className="checkbox"
-                      checked={item.selected || false}
-                      onChange={(event) => handleCheckbox(event, item)}
-                    />
-                  </label>
-                </th>
-                <td className="font-bold">{item.order_id}</td>
-                <td>{item.order_date}</td>
-                <td>{item.start_time}</td>
-                <td>{`Point ${item.start_point}`}</td>
-                <td>{`Point ${item.end_point}`}</td>
-                <td>{item.load_name}</td>
-                <td>{`${item.load_amount} units`}</td>
-                <td>{`${item.load_weight} kg`}</td>
-
-                <td className="flex space-x-2">
-                  <button
-                    className="btn btn-warning btn-sm w-1/2"
-                    onClick={() => handleClickBtnUpdate(item)}
-                  >
-                    Update
-                  </button>
-                  <button
-                    className="btn btn-error btn-sm w-1/2"
-                    onClick={() => handleClickBtnDelete(item)}
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))
-          ) : (
+      <div className="relative min-h-96">
+        <table ref={tableOrdersRef} data-theme="cupcake" className="table">
+          <thead>
             <tr>
-              <td colSpan={colSpan}>Data not found</td>
+              <th>
+                <label>
+                  <input
+                    type="checkbox"
+                    className="checkbox-primary checkbox"
+                    checked={selectAll}
+                    onChange={handleSelectAll}
+                  />
+                </label>
+              </th>
+              <th scope="col">
+                <div className="flex justify-between">
+                  <span>Order ID</span>
+                  <span>
+                    <i
+                      onClick={() => handleSort("desc", "order_id")}
+                      className="fa-solid fa-arrow-down mx-1 cursor-pointer"
+                    ></i>
+                    <i
+                      onClick={() => handleSort("asc", "order_id")}
+                      className="fa-solid fa-arrow-up mx-1 cursor-pointer"
+                    ></i>
+                  </span>
+                </div>
+              </th>
+              <th scope="col">Order date</th>
+              <th scope="col">Start time</th>
+              <th scope="col">Start point</th>
+              <th scope="col">End point</th>
+              <th scope="col">Load name</th>
+              <th scope="col">Load amount</th>
+              <th scope="col">Load weight</th>
+              <th>Action</th>
             </tr>
-          )}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {Array.isArray(currentRows) && currentRows.length > 0 ? (
+              currentRows.map((item, index) => (
+                <tr
+                  key={index}
+                  className={item.highlighted ? "bg-primary" : ""}
+                >
+                  <th>
+                    <label>
+                      <input
+                        type="checkbox"
+                        className="checkbox"
+                        checked={item.selected || false}
+                        onChange={(event) => handleCheckbox(event, item)}
+                      />
+                    </label>
+                  </th>
+                  <td className="font-bold">{item.order_id}</td>
+                  <td>{item.order_date}</td>
+                  <td>{item.start_time}</td>
+                  <td>{`Point ${item.start_point}`}</td>
+                  <td>{`Point ${item.end_point}`}</td>
+                  <td>{item.load_name}</td>
+                  <td>{`${item.load_amount} units`}</td>
+                  <td>{`${item.load_weight} kg`}</td>
+
+                  <td className="flex space-x-2">
+                    <button
+                      className="btn btn-warning btn-sm w-1/2"
+                      onClick={() => handleClickBtnUpdate(item)}
+                    >
+                      Update
+                    </button>
+                    <button
+                      className="btn btn-error btn-sm w-1/2"
+                      onClick={() => handleClickBtnDelete(item)}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan={colSpan}>Data not found</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+
+        <Pagination className="absolute bottom-0 w-full">
+          <PaginationContent>
+            <PaginationItem>
+              <PaginationPrevious
+                onClick={handlePrevPage}
+                disabled={currentPage === 1}
+                className="cursor-pointer"
+              />
+            </PaginationItem>
+            <PaginationItem>
+              Page {currentPage} of {totalPages}
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationNext
+                onClick={handleNextPage}
+                disabled={currentPage === totalPages}
+                className="cursor-pointer"
+              />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
+      </div>
     </div>
   );
 }
