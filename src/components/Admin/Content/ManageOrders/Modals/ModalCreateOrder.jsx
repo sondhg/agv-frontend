@@ -28,8 +28,8 @@ export default function ModalCreateOrder(props) {
   const [start_point, setStartPoint] = useState(startPoints[0]);
   const [end_point, setEndPoint] = useState(endPoints[0]);
 
-  const [load_name, setload_name] = useState(loadNames[0]);
-  const [load_amount, setload_amount] = useState(0);
+  const [load_name, setLoadName] = useState(loadNames[0]);
+  const [load_amount, setLoadAmount] = useState(0);
   const [load_weight, setLoadWeight] = useState(0);
 
   const [originalDate, setOriginalDate] = useState(NEW_DATE);
@@ -50,8 +50,8 @@ export default function ModalCreateOrder(props) {
     setStartTime(NEW_LOCALE_TIME);
     setStartPoint(startPoints[0]);
     setEndPoint(endPoints[0]);
-    setload_amount(0);
-    setload_name(loadNames[0]);
+    setLoadName(loadNames[0]);
+    setLoadAmount(0);
   };
 
   const handleSubmitCreateOrder = async () => {
@@ -64,8 +64,7 @@ export default function ModalCreateOrder(props) {
     ) {
       setShowWarningMsg(true);
       setWarningMsg("Load amount must not be negative or contain minus sign!");
-
-      setload_amount(0);
+      setLoadAmount(0);
       return;
     }
 
@@ -205,7 +204,7 @@ export default function ModalCreateOrder(props) {
                 className="select select-bordered select-accent"
                 value={load_name}
                 type="number"
-                onChange={(event) => setload_name(event.target.value)}
+                onChange={(event) => setLoadName(event.target.value)}
               >
                 {loadNames.map((item) => (
                   <option key={item} value={item}>
@@ -224,7 +223,7 @@ export default function ModalCreateOrder(props) {
                 min={0}
                 className="input input-bordered input-accent w-full max-w-xs"
                 value={load_amount}
-                onChange={(event) => setload_amount(event.target.value)}
+                onChange={(event) => setLoadAmount(event.target.value)}
               />
             </label>
 

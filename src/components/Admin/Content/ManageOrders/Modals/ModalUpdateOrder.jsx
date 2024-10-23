@@ -55,7 +55,6 @@ export default function ModalUpdateOrder(props) {
   const [start_time, setStartTime] = useState(NEW_LOCALE_TIME);
 
   const [cloneLoadAmount, setCloneLoadAmount] = useState(0);
-  const [cloneLoadWeight, setCloneLoadWeight] = useState(0);
   const [cloneStartTime, setCloneStartTime] = useState(NEW_LOCALE_TIME);
 
   useEffect(() => {
@@ -66,11 +65,10 @@ export default function ModalUpdateOrder(props) {
       setStartTime(dataUpdate.start_time);
       setStartPoint(dataUpdate.start_point);
       setEndPoint(dataUpdate.end_point);
-      setLoadAmount(dataUpdate.load_amount);
       setLoadName(dataUpdate.load_name);
+      setLoadAmount(dataUpdate.load_amount);
 
       setCloneLoadAmount(dataUpdate.load_amount);
-      setCloneLoadWeight(dataUpdate.load_weight);
       setCloneStartTime(dataUpdate.start_time);
     }
   }, [dataUpdate]);
@@ -86,7 +84,6 @@ export default function ModalUpdateOrder(props) {
       setShowWarningMsg(true);
       setWarningMsg("Load amount must not be negative or contain minus sign!");
       setLoadAmount(cloneLoadAmount);
-      // setLoadWeight(cloneLoadWeight);
       return;
     }
 
@@ -126,9 +123,9 @@ export default function ModalUpdateOrder(props) {
     let weightPerUnit = 0;
     if (load_name === "Stone") {
       weightPerUnit = 1;
-    } else if (load_name === "Iron") {
-      weightPerUnit = 2;
     } else if (load_name === "Cement") {
+      weightPerUnit = 2;
+    } else if (load_name === "Iron") {
       weightPerUnit = 3;
     }
     setLoadWeight(weightPerUnit * load_amount);
