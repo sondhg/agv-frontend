@@ -35,7 +35,7 @@ const SpeedLineChart = ({ dataSocket = {} }) => {
   const maxSpeed = Math.max(...filteredSpeedData.map((d) => d.speed));
 
   return (
-    <div data-aos="fade-up" className="card bg-neutral shadow-xl lg:card-side">
+    <div className="card bg-neutral shadow-xl lg:card-side">
       <div className="card-body items-center text-center">
         <h2 className="card-title">Speed change in real time</h2>
 

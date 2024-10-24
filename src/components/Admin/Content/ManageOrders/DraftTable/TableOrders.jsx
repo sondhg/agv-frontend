@@ -23,7 +23,6 @@ export default function TableOrders(props) {
   const [selectAll, setSelectAll] = useState(false);
 
   const tableOrdersRef = useRef(null);
-  const [colSpan, setColSpan] = useState(1);
 
   const [sortBy, setSortBy] = useState("asc");
   const [sortField, setSortField] = useState("order_id");
@@ -33,14 +32,6 @@ export default function TableOrders(props) {
   );
 
   const [currentPage, setCurrentPage] = useState(1);
-
-  // auto adjust colSpan
-  useEffect(() => {
-    if (tableOrdersRef.current) {
-      const columnCount = tableOrdersRef.current.rows[0].cells.length;
-      setColSpan(columnCount);
-    }
-  }, []);
 
   // Clone listOrders whenever it changes
   useEffect(() => {
@@ -127,6 +118,19 @@ export default function TableOrders(props) {
     }
   };
 
+  // edit tableHeaders if you want more columns
+  const tableHeaders = [
+    { label: "Order ID", sortKey: "order_id" },
+    { label: "Order date", sortKey: "order_date" },
+    { label: "Start time", sortKey: "start_time" },
+    { label: "Start point", sortKey: "start_point" },
+    { label: "End point", sortKey: "end_point" },
+    { label: "Load name", sortKey: "load_name" },
+    { label: "Load amount", sortKey: "load_amount" },
+    { label: "Load weight", sortKey: "load_weight" },
+    { label: "Action", sortKey: null },
+  ];
+
   return (
     <div className="menu menu-vertical space-y-1">
       <div className="menu menu-horizontal space-x-5 rounded-box">
@@ -164,29 +168,25 @@ export default function TableOrders(props) {
                   />
                 </label>
               </th>
-              <th scope="col">
-                <div className="flex justify-between">
-                  <span>Order ID</span>
-                  <span>
-                    <i
-                      onClick={() => handleSort("desc", "order_id")}
-                      className="fa-solid fa-arrow-down mx-1 cursor-pointer"
-                    ></i>
-                    <i
-                      onClick={() => handleSort("asc", "order_id")}
-                      className="fa-solid fa-arrow-up mx-1 cursor-pointer"
-                    ></i>
-                  </span>
-                </div>
-              </th>
-              <th scope="col">Order date</th>
-              <th scope="col">Start time</th>
-              <th scope="col">Start point</th>
-              <th scope="col">End point</th>
-              <th scope="col">Load name</th>
-              <th scope="col">Load amount</th>
-              <th scope="col">Load weight</th>
-              <th>Action</th>
+              {tableHeaders.map((header) => (
+                <th key={header.label} scope="col">
+                  <div className="flex justify-between">
+                    <span>{header.label}</span>
+                    {header.sortKey && (
+                      <span>
+                        <i
+                          onClick={() => handleSort("desc", header.sortKey)}
+                          className="fa-solid fa-arrow-down mx-1 cursor-pointer"
+                        ></i>
+                        <i
+                          onClick={() => handleSort("asc", header.sortKey)}
+                          className="fa-solid fa-arrow-up mx-1 cursor-pointer"
+                        ></i>
+                      </span>
+                    )}
+                  </div>
+                </th>
+              ))}
             </tr>
           </thead>
           <tbody>
@@ -206,34 +206,36 @@ export default function TableOrders(props) {
                       />
                     </label>
                   </th>
-                  <td className="font-bold">{item.order_id}</td>
-                  <td>{item.order_date}</td>
-                  <td>{item.start_time}</td>
-                  <td>{`Point ${item.start_point}`}</td>
-                  <td>{`Point ${item.end_point}`}</td>
-                  <td>{item.load_name}</td>
-                  <td>{`${item.load_amount} units`}</td>
-                  <td>{`${item.load_weight} kg`}</td>
-
-                  <td className="flex space-x-2">
-                    <button
-                      className="btn btn-warning btn-sm w-1/2"
-                      onClick={() => handleClickBtnUpdate(item)}
+                  {tableHeaders.map((header) => (
+                    <td
+                      key={header.label}
+                      className={header.label === "Order ID" ? "font-bold" : ""}
                     >
-                      Update
-                    </button>
-                    <button
-                      className="btn btn-error btn-sm w-1/2"
-                      onClick={() => handleClickBtnDelete(item)}
-                    >
-                      Delete
-                    </button>
-                  </td>
+                      {header.label === "Action" ? (
+                        <div className="flex space-x-2">
+                          <button
+                            className="btn btn-warning btn-sm w-1/2"
+                            onClick={() => handleClickBtnUpdate(item)}
+                          >
+                            Update
+                          </button>
+                          <button
+                            className="btn btn-error btn-sm w-1/2"
+                            onClick={() => handleClickBtnDelete(item)}
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      ) : (
+                        item[header.sortKey]
+                      )}
+                    </td>
+                  ))}
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan={colSpan}>Data not found</td>
+                <td colSpan={tableHeaders.length + 1}>No orders found.</td>
               </tr>
             )}
           </tbody>

@@ -8,15 +8,7 @@ import {
 export default function HomeAbout() {
   return (
     <section id="about" className="hero min-h-screen bg-base-200">
-      <div
-        data-aos="fade-right"
-        data-aos-delay="50"
-        className="hero-content flex-col gap-10 lg:flex-row"
-      >
-        <img
-          src="https://img.daisyui.com/images/stock/photo-1635805737707-575885ab0820.webp"
-          className="max-w-sm rounded-lg shadow-2xl"
-        />
+      <div className="hero-content flex-col gap-10 lg:flex-row">
         <div>
           <h1 className="text-5xl font-bold">About</h1>
           <p className="py-6">

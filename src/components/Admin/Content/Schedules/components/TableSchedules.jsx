@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 
 import {
   Table,
@@ -25,16 +25,6 @@ export default function TableSchedules(props) {
   // ! when /api/schedules is ready, uncomment this line and delete the dummy data import
   // const { listSchedules } = props;
 
-  const tableSchedulesRef = useRef(null);
-  const [colSpan, setColSpan] = useState(1);
-
-  useEffect(() => {
-    if (tableSchedulesRef.current) {
-      const columnCount = tableSchedulesRef.current.rows[0].cells.length;
-      setColSpan(columnCount);
-    }
-  }, []);
-
   const [currentPage, setCurrentPage] = useState(1);
   const ROWS_PER_PAGE = 5; // number of rows per page
 
@@ -56,44 +46,60 @@ export default function TableSchedules(props) {
     }
   };
 
+  //edit tableHeaders if you want more columns
+  const tableHeaders = [
+    { name: "Schedule ID", key: "schedule_id" },
+    { name: "Order ID", key: "order_id" },
+    { name: "Order date", key: "order_date" },
+    { name: "Est. Start time", key: "est_start_time" },
+    { name: "Est. End time", key: "est_end_time" },
+    { name: "Start point", key: "start_point" },
+    { name: "End point", key: "end_point" },
+    { name: "Load name", key: "load_name" },
+    { name: "Load amount", key: "load_amount" },
+    { name: "Load weight", key: "load_weight" },
+  ];
+
   return (
     <div className="relative min-h-96">
-      <Table ref={tableSchedulesRef}>
+      <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[120px]">Schedule ID</TableHead>
-            <TableHead>Order ID</TableHead>
-            <TableHead>Order date</TableHead>
-            <TableHead>Est. Start time</TableHead>
-            <TableHead>Est. End time</TableHead>
-            <TableHead>Start point</TableHead>
-            <TableHead>End point</TableHead>
-            <TableHead>Load name</TableHead>
-            <TableHead>Load amount</TableHead>
-            <TableHead className="text-right">Load weight</TableHead>
+            {tableHeaders.map((header, index) => (
+              <TableHead
+                key={index}
+                className={header.name === "Schedule ID" ? "w-[120px]" : ""}
+              >
+                {header.name}
+              </TableHead>
+            ))}
           </TableRow>
         </TableHeader>
         <TableBody>
           {Array.isArray(currentRows) && currentRows.length > 0 ? (
             currentRows.map((item, index) => (
               <TableRow key={index}>
-                <TableCell className="font-medium">
-                  {item.schedule_id}
-                </TableCell>
-                <TableCell>{item.order_id}</TableCell>
-                <TableCell>{item.order_date}</TableCell>
-                <TableCell>{item.est_start_time}</TableCell>
-                <TableCell>{item.est_end_time}</TableCell>
-                <TableCell>{item.start_point}</TableCell>
-                <TableCell>{item.end_point}</TableCell>
-                <TableCell>{item.load_name}</TableCell>
-                <TableCell>{`${item.load_amount} units`}</TableCell>
-                <TableCell className="text-right">{`${item.load_weight} kg`}</TableCell>
+                {tableHeaders.map((header, cellIndex) => (
+                  <TableCell
+                    key={cellIndex}
+                    className={
+                      header.key === "schedule_id" ? "font-medium" : ""
+                    }
+                  >
+                    {header.key === "load_amount"
+                      ? `${item[header.key]} units`
+                      : header.key === "load_weight"
+                        ? `${item[header.key]} kg`
+                        : item[header.key]}
+                  </TableCell>
+                ))}
               </TableRow>
             ))
           ) : (
             <TableRow>
-              <TableCell colSpan={colSpan}>No schedules available.</TableCell>
+              <TableCell colSpan={tableHeaders.length}>
+                No schedules available.
+              </TableCell>
             </TableRow>
           )}
         </TableBody>

@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 
 import {
   Table,
@@ -25,16 +25,6 @@ export default function TableAGVs(props) {
   // ! when /api/AGVs is ready, uncomment this line and delete the dummy data import
   // const { listAGVs } = props;
 
-  const tableAGVsRef = useRef(null);
-  const [colSpan, setColSpan] = useState(1);
-
-  useEffect(() => {
-    if (tableAGVsRef.current) {
-      const columnCount = tableAGVsRef.current.rows[0].cells.length;
-      setColSpan(columnCount);
-    }
-  }, []);
-
   const [currentPage, setCurrentPage] = useState(1);
   const ROWS_PER_PAGE = 5; // number of rows per page
 
@@ -56,36 +46,51 @@ export default function TableAGVs(props) {
     }
   };
 
+  //edit tableHeaders if you want more columns
+  const tableHeaders = [
+    { name: "Schedule ID", key: "agv_id" },
+    { name: "Max speed", key: "max_speed" },
+    { name: "Max battery", key: "max_battery" },
+    { name: "Max load", key: "max_load" },
+    { name: "Guidance type", key: "guidance_type" },
+    { name: "Is connected?", key: "is_connected" },
+    { name: "Is busy?", key: "is_busy" },
+  ];
+
   return (
     <div className="relative min-h-96">
-      <Table ref={tableAGVsRef}>
+      <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[120px]">Schedule ID</TableHead>
-            <TableHead>Max speed</TableHead>
-            <TableHead>Max battery</TableHead>
-            <TableHead>Max load</TableHead>
-            <TableHead>Guidance type</TableHead>
-            <TableHead>Is connected?</TableHead>
-            <TableHead>Is busy?</TableHead>
+            {tableHeaders.map((header, index) => (
+              <TableHead
+                key={index}
+                className={header.name === "Schedule ID" ? "w-[120px]" : ""}
+              >
+                {header.name}
+              </TableHead>
+            ))}
           </TableRow>
         </TableHeader>
         <TableBody>
           {Array.isArray(currentRows) && currentRows.length > 0 ? (
             currentRows.map((item, index) => (
               <TableRow key={index}>
-                <TableCell className="font-medium">{item.agv_id}</TableCell>
-                <TableCell>{item.max_speed}</TableCell>
-                <TableCell>{item.max_battery}</TableCell>
-                <TableCell>{item.max_load}</TableCell>
-                <TableCell>{item.guidance_type}</TableCell>
-                <TableCell>{item.is_connected}</TableCell>
-                <TableCell>{item.is_busy}</TableCell>
+                {tableHeaders.map((header, cellIndex) => (
+                  <TableCell
+                    key={cellIndex}
+                    className={header.key === "agv_id" ? "font-medium" : ""}
+                  >
+                    {item[header.key]}
+                  </TableCell>
+                ))}
               </TableRow>
             ))
           ) : (
             <TableRow>
-              <TableCell colSpan={colSpan}>No AGV registered.</TableCell>
+              <TableCell colSpan={tableHeaders.length}>
+                No data available
+              </TableCell>
             </TableRow>
           )}
         </TableBody>

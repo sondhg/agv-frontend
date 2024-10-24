@@ -16,13 +16,11 @@ export default function HomeHero() {
       <div className="hero-overlay bg-opacity-70"></div>
       <div className="hero-content text-center">
         <div>
-          <h1 data-aos="fade-left" className="mb-5 text-5xl font-bold">
+          <h1 className="mb-5 text-5xl font-bold">
             Automated Guided Vehicle (AGV)
           </h1>
-          <p data-aos="fade-right" className="mb-5">
-            SUPERVISORY AND CONTROL SOFTWARE
-          </p>
-          <div data-aos="fade-up" data-aos-delay={50}>
+          <p className="mb-5">SUPERVISORY AND CONTROL SOFTWARE</p>
+          <div>
             {isAuthenticated === false ? (
               <a href="#about" className="btn btn-info">
                 Get Started
