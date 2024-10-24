@@ -144,21 +144,21 @@ export default function TableOrders(props) {
           </button>
         </div>
         <div>
-          <button className="btn btn-primary btn-sm" onClick={removeSorting}>
+          <button className="btn btn-neutral btn-sm" onClick={removeSorting}>
             <i className="fa-solid fa-arrow-up-1-9"></i>
             <span>Remove sorting</span>
           </button>
         </div>
       </div>
       <div className="relative min-h-96">
-        <table ref={tableOrdersRef} data-theme="cupcake" className="table">
-          <thead>
+        <table ref={tableOrdersRef} className="table bg-white text-black">
+          <thead className="text-black">
             <tr>
               <th>
                 <label>
                   <input
                     type="checkbox"
-                    className="checkbox-primary checkbox"
+                    className="checkbox-error checkbox"
                     checked={selectAll}
                     onChange={handleSelectAll}
                   />
@@ -194,13 +194,13 @@ export default function TableOrders(props) {
               currentRows.map((item, index) => (
                 <tr
                   key={index}
-                  className={item.highlighted ? "bg-primary" : ""}
+                  className={item.highlighted ? "bg-neutral-content" : ""}
                 >
                   <th>
                     <label>
                       <input
                         type="checkbox"
-                        className="checkbox"
+                        className="checkbox-primary checkbox"
                         checked={item.selected || false}
                         onChange={(event) => handleCheckbox(event, item)}
                       />
