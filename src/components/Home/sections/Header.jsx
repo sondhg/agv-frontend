@@ -111,7 +111,7 @@ export default function Header() {
           </>
         ) : (
           <>
-            {/* <NavLink to="/admin">
+            {/* <NavLink to="/admin/dashboard">
               <button className="btn btn-accent">Dashboard</button>
             </NavLink>
 

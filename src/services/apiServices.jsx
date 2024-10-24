@@ -40,6 +40,10 @@ const getAllSchedules = () => {
   return axios.get("/schedules/");
 };
 
+const getAllAGVs = () => {
+  return axios.get("/schedules/");
+};
+
 export {
   // orders
   getAllOrders,
@@ -54,4 +58,7 @@ export {
 
   // schedules
   getAllSchedules,
+
+  // AGVs
+  getAllAGVs,
 };

@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Admin from "./components/Admin/Admin";
@@ -10,6 +10,7 @@ import Register from "./components/Auth/Register";
 import Home from "./components/Home/Home";
 import PrivateRoute from "./routes/PrivateRoute";
 import Schedules from "./components/Admin/Content/Schedules/Schedules";
+import AGVs from "./components/Admin/Content/AGVs/AGVs";
 
 const NotFound = () => {
   return (
@@ -34,9 +35,11 @@ export default function Layout() {
               // </PrivateRoute>
             }
           >
-            <Route index element={<Dashboard />} />
+            <Route index element={<Navigate to="dashboard" />} />
+            <Route path="dashboard" element={<Dashboard />} />
             <Route path="manage-orders" element={<ManageOrder />} />
             <Route path="schedules" element={<Schedules />} />
+            <Route path="agvs" element={<AGVs />} />
           </Route>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/register" element={<Register />}></Route>

@@ -29,14 +29,20 @@ export default function HomeHero() {
               </a>
             ) : (
               <div className="space-x-5">
-                <NavLink to="/admin" className="btn btn-primary">
+                <NavLink to="/admin/dashboard" className="btn btn-primary">
                   Dashboard
                 </NavLink>
-                <NavLink to="/admin/manage-orders" className="btn btn-secondary">
+                <NavLink
+                  to="/admin/manage-orders"
+                  className="btn btn-secondary"
+                >
                   Manage Orders
                 </NavLink>
                 <NavLink to="/admin/schedules" className="btn btn-accent">
                   Schedules
+                </NavLink>
+                <NavLink to="/admin/agvs" className="btn btn-info">
+                  AGVs
                 </NavLink>
               </div>
             )}

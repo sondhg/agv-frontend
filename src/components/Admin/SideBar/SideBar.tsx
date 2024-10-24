@@ -176,7 +176,7 @@ export default function SideBar() {
               </MenuItem>
               <MenuItem
                 icon={<i className="fa-solid fa-gauge"></i>}
-                component={<Link to="/admin" />}
+                component={<Link to="/admin/dashboard" />}
                 // suffix={<span className="badge red">New</span>}
               >
                 Dashboard
@@ -192,6 +192,12 @@ export default function SideBar() {
                 component={<Link to="/admin/schedules" />}
               >
                 Schedules
+              </MenuItem>
+              <MenuItem
+                icon={<i className="fa-solid fa-cart-flatbed"></i>}
+                component={<Link to="/admin/agvs" />}
+              >
+                AGVs
               </MenuItem>
             </Menu>
 
