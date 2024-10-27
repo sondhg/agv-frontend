@@ -1,5 +1,5 @@
+import { Battery, CircleGauge, MapPin, TriangleAlert } from "lucide-react";
 import PropTypes from "prop-types";
-
 export default function StatsBox({ agv_id, dataSocket = {} }) {
   const {
     speed = 0,
@@ -21,7 +21,7 @@ export default function StatsBox({ agv_id, dataSocket = {} }) {
           <div className="stats stats-vertical shadow shadow-neutral-900 lg:stats-horizontal">
             <div className="stat place-items-center">
               <div className="stat-figure text-primary">
-                <i className="fa-solid fa-gauge fa-xl"></i>
+                <CircleGauge />
               </div>
               <div className="stat-title text-white">Speed</div>
               <div className="stat-value text-primary">
@@ -30,7 +30,7 @@ export default function StatsBox({ agv_id, dataSocket = {} }) {
             </div>
             <div className="stat place-items-center">
               <div className="stat-figure text-success">
-                <i className="fa-solid fa-battery-three-quarters fa-xl"></i>
+                <Battery />
               </div>
               <div className="stat-title text-white">Battery</div>
               <div className="stat-value text-success">
@@ -42,7 +42,7 @@ export default function StatsBox({ agv_id, dataSocket = {} }) {
             </div>
             <div className="stat place-items-center">
               <div className="stat-figure text-warning">
-                <i className="fa-solid fa-triangle-exclamation fa-xl"></i>
+                <TriangleAlert />
               </div>
               <div className="stat-title text-white">Obstacle detected</div>
               <div className="stat-value text-warning">
@@ -52,7 +52,7 @@ export default function StatsBox({ agv_id, dataSocket = {} }) {
             </div>
             <div className="stat place-items-center">
               <div className="stat-figure text-accent">
-                <i className="fa-solid fa-location-dot fa-xl"></i>
+                <MapPin />
               </div>
               <div className="stat-title text-white">Location</div>
               <div className="stat-value text-accent">{location ?? "N/A"}</div>

@@ -1,6 +1,10 @@
-import PropTypes from "prop-types";
-import { useState } from "react";
-
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 import {
   Table,
   TableBody,
@@ -9,14 +13,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
+import PropTypes from "prop-types";
+import { useState } from "react";
 
 // ! remove this line when /api/schedules is ready
 import { listSchedules } from "./dummyData";

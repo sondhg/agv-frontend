@@ -1,16 +1,16 @@
 import { Suspense } from "react";
-import { Route, Routes, Navigate } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Admin from "./components/Admin/Admin";
-import Dashboard from "./components/Admin/Content/Dashboard/Dashboard";
+import Dashboard from "./components/Admin/Content/Dashboard/DashBoard";
 import ManageOrder from "./components/Admin/Content/ManageOrders/ManageOrder";
 import Login from "./components/Auth/Login";
 import Register from "./components/Auth/Register";
 import Home from "./components/Home/Home";
 import PrivateRoute from "./routes/PrivateRoute";
-import Schedules from "./components/Admin/Content/Schedules/Schedules";
 import AGVs from "./components/Admin/Content/AGVs/AGVs";
+import Schedules from "./components/Admin/Content/Schedules/Schedules";
 
 const NotFound = () => {
   return (

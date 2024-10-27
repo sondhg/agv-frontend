@@ -5,9 +5,9 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-
 import cloneDeep from "lodash/cloneDeep";
 import orderBy from "lodash/orderBy";
+import { ArrowDown, ArrowUp, ArrowUp01, Trash } from "lucide-react";
 import PropTypes from "prop-types";
 import { useEffect, useRef, useState } from "react";
 import { deleteOrder } from "../../../../../services/apiServices";
@@ -136,20 +136,20 @@ export default function TableOrders(props) {
       <div className="menu menu-horizontal space-x-5 rounded-box">
         <div
           className="tooltip tooltip-bottom"
-          data-tip="Delete all selected orders?"
+          data-tip="Delete selected orders?"
         >
           <button
             id="mass-delete-btn"
             className="btn btn-error btn-sm"
             onClick={handleMassDelete}
           >
-            <i className="fa-solid fa-trash-can"></i>
+            <Trash size={16} />
             <span>MASS DELETE</span>
           </button>
         </div>
         <div>
           <button className="btn btn-neutral btn-sm" onClick={removeSorting}>
-            <i className="fa-solid fa-arrow-up-1-9"></i>
+            <ArrowUp01 />
             <span>Remove sorting</span>
           </button>
         </div>
@@ -173,15 +173,15 @@ export default function TableOrders(props) {
                   <div className="flex justify-between">
                     <span>{header.label}</span>
                     {header.sortKey && (
-                      <span>
-                        <i
-                          onClick={() => handleSort("desc", header.sortKey)}
-                          className="fa-solid fa-arrow-down mx-1 cursor-pointer"
-                        ></i>
-                        <i
+                      <span className="flex">
+                        <ArrowUp
+                          size={16}
                           onClick={() => handleSort("asc", header.sortKey)}
-                          className="fa-solid fa-arrow-up mx-1 cursor-pointer"
-                        ></i>
+                        />
+                        <ArrowDown
+                          size={16}
+                          onClick={() => handleSort("desc", header.sortKey)}
+                        />
                       </span>
                     )}
                   </div>

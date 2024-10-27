@@ -1,3 +1,4 @@
+import { Eye, EyeOff, Loader } from "lucide-react";
 import { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -114,14 +115,14 @@ export default function Login() {
                 className="icons-eye"
                 onClick={() => setIsShowPassword(false)}
               >
-                <i className="fa-solid fa-eye text-black"></i>
+                <Eye className="text-black" />
               </span>
             ) : (
               <span
                 className="icons-eye"
                 onClick={() => setIsShowPassword(true)}
               >
-                <i className="fa-regular fa-eye-slash text-black"></i>
+                <EyeOff className="text-black" />
               </span>
             )}
           </div>
@@ -131,7 +132,7 @@ export default function Login() {
           onClick={handleLogin}
           disabled={isLoading}
         >
-          {isLoading && <i className="fa-solid fa-spinner loader-icon"></i>}
+          {isLoading && <Loader className="animate-spin text-blue-400" />}
           <span>Login</span>
         </button>
         <p

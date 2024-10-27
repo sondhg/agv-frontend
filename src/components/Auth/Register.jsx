@@ -1,3 +1,4 @@
+import { Eye, EyeOff, Loader } from "lucide-react";
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -132,14 +133,14 @@ export default function Register() {
                 className="icons-eye"
                 onClick={() => setIsShowPassword(false)}
               >
-                <i className="fa-solid fa-eye text-black"></i>
+                <Eye className="text-black" />
               </span>
             ) : (
               <span
                 className="icons-eye"
                 onClick={() => setIsShowPassword(true)}
               >
-                <i className="fa-regular fa-eye-slash text-black"></i>
+                <EyeOff className="text-black" />
               </span>
             )}
           </div>
@@ -163,7 +164,7 @@ export default function Register() {
         </div>
         <button onClick={handleRegister} disabled={isLoading}>
           <div className="btn btn-primary btn-wide">
-            {isLoading && <i className="fa-solid fa-spinner loader-icon"></i>}
+            {isLoading && <Loader className="animate-spin text-blue-400" />}
             <span>Register</span>
           </div>
         </button>

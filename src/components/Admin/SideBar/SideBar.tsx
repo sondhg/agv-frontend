@@ -1,3 +1,17 @@
+import {
+  CalendarDays,
+  Car,
+  CircleGauge,
+  Eye,
+  EyeOff,
+  House,
+  ListOrdered,
+  Moon,
+  Settings,
+  Sun,
+  ToggleLeft,
+  ToggleRight,
+} from "lucide-react";
 import React, { useState } from "react";
 import {
   Menu,
@@ -11,7 +25,6 @@ import { Link } from "react-router-dom";
 import { SidebarFooter } from "./components/SidebarFooter";
 import { SidebarHeader } from "./components/SidebarHeader";
 import { Typography } from "./components/Typography";
-
 type Theme = "light" | "dark";
 
 const themes = {
@@ -168,35 +181,29 @@ export default function SideBar() {
             </div>
 
             <Menu menuItemStyles={menuItemStyles} id="navigation">
-              <MenuItem
-                icon={<i className="fa-solid fa-house"></i>}
-                component={<Link to="/" />}
-              >
+              <MenuItem icon={<House />} component={<Link to="/" />}>
                 Home
               </MenuItem>
               <MenuItem
-                icon={<i className="fa-solid fa-gauge"></i>}
+                icon={<CircleGauge />}
                 component={<Link to="/admin/dashboard" />}
                 // suffix={<span className="badge red">New</span>}
               >
                 Dashboard
               </MenuItem>
               <MenuItem
-                icon={<i className="fa-solid fa-list-check"></i>}
+                icon={<ListOrdered />}
                 component={<Link to="/admin/manage-orders" />}
               >
                 Manage Orders
               </MenuItem>
               <MenuItem
-                icon={<i className="fa-solid fa-calendar-days"></i>}
+                icon={<CalendarDays />}
                 component={<Link to="/admin/schedules" />}
               >
                 Schedules
               </MenuItem>
-              <MenuItem
-                icon={<i className="fa-solid fa-cart-flatbed"></i>}
-                component={<Link to="/admin/agvs" />}
-              >
+              <MenuItem icon={<Car />} component={<Link to="/admin/agvs" />}>
                 AGVs
               </MenuItem>
             </Menu>
@@ -213,42 +220,21 @@ export default function SideBar() {
 
             <Menu menuItemStyles={menuItemStyles} id="customize-sidebar">
               <MenuItem
-                icon={
-                  collapsed ? (
-                    <i className="fa-solid fa-toggle-off"></i>
-                  ) : (
-                    <i className="fa-solid fa-toggle-on"></i>
-                  )
-                }
+                icon={collapsed ? <ToggleLeft /> : <ToggleRight />}
                 onClick={() => handleCollapseChange()}
               >
                 {collapsed ? "" : "Collapse"}
               </MenuItem>
-              <SubMenu
-                icon={<i className="fa-solid fa-gear"></i>}
-                label="Customize"
-              >
+              <SubMenu icon={<Settings />} label="Customize">
                 <MenuItem
-                  icon={
-                    theme === "dark" ? (
-                      <i className="fa-solid fa-moon"></i>
-                    ) : (
-                      <i className="fa-solid fa-sun"></i>
-                    )
-                  }
+                  icon={theme === "dark" ? <Moon /> : <Sun />}
                   title={`Switch between themes (currently ${theme} theme)`}
                   onClick={() => handleThemeChange()}
                 >
                   {theme === "dark" ? "Dark theme" : "Light theme"}
                 </MenuItem>
                 <MenuItem
-                  icon={
-                    hasImage ? (
-                      <i className="fa-solid fa-eye"></i>
-                    ) : (
-                      <i className="fa-solid fa-eye-slash"></i>
-                    )
-                  }
+                  icon={hasImage ? <Eye /> : <EyeOff />}
                   title={`Insert background image: currently ${hasImage}`}
                   onClick={() => handleImageChange()}
                 >

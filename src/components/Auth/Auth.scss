@@ -107,23 +107,6 @@ $input-color: #f3f0ff;
   bottom: 10px;
 }
 
-.login-register-container {
-  .loader-icon {
-    font-size: 14px;
-    color: #00d4ff;
-    animation: spin 1s infinite linear;
-  }
-
-  @keyframes spin {
-    from {
-      transform: scale(1) rotate(0deg);
-    }
-    to {
-      transform: scale(1) rotate(360deg);
-    }
-  }
-}
-
 button {
   &:disabled {
     background: #dddddd !important;

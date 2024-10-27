@@ -1,3 +1,5 @@
+import { Github } from "../../Admin/SideBar/icons/Github";
+
 export default function HomeFooter() {
   return (
     <footer className="footer items-center bg-neutral p-4 text-neutral-content">
@@ -24,7 +26,9 @@ export default function HomeFooter() {
           target="_blank"
           className="mb-0"
         >
-          <i className="fa-brands fa-square-github"></i> GitHub: sondhg
+          <span className="flex space-x-1">
+            <Github /> <span>GitHub: sondhg</span>
+          </span>
         </a>
       </nav>
     </footer>

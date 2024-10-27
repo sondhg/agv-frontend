@@ -1,5 +1,6 @@
 import cloneDeep from "lodash/cloneDeep";
 import debounce from "lodash/debounce";
+import { CirclePlus, FileOutput, Lightbulb } from "lucide-react";
 import { useEffect, useState } from "react";
 import { CSVLink } from "react-csv";
 import "react-toastify/dist/ReactToastify.css";
@@ -98,7 +99,7 @@ export default function ManageOrder() {
                 document.getElementById("modal-create-order").showModal()
               }
             >
-              <i className="fa-solid fa-circle-plus"></i>
+              <CirclePlus />
               <span>Create order</span>
             </button>
             <button
@@ -107,7 +108,7 @@ export default function ManageOrder() {
                 document.getElementById("modal-csv-guide").showModal()
               }
             >
-              <i className="fa-solid fa-lightbulb"></i>
+              <Lightbulb />
               <span>Import CSV</span>
             </button>
             <CSVLink
@@ -117,7 +118,7 @@ export default function ManageOrder() {
               asyncOnClick={true}
               onClick={(event, done) => getOrdersExport(event, done)}
             >
-              <i className="fa-solid fa-file-export"></i>
+              <FileOutput />
               <span>Export CSV</span>
             </CSVLink>
             <label className="input input-bordered flex items-center gap-2 bg-white text-black">

@@ -1,3 +1,4 @@
+import { Import } from "lucide-react";
 import PropTypes from "prop-types";
 import { useState } from "react";
 import {
@@ -77,7 +78,7 @@ export default function ModalCsvGuide(props) {
           <div>
             <label htmlFor="import-csv" className="btn btn-secondary">
               <div>
-                <i className="fa-solid fa-file-import"></i>
+                <Import />
                 <span className="ms-2">Select file</span>
               </div>
             </label>
