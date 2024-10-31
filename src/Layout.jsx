@@ -1,7 +1,5 @@
 import { Suspense } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import Admin from "./components/Admin/Admin";
 import Dashboard from "./components/Admin/Content/Dashboard/DashBoard";
 import ManageOrder from "./components/Admin/Content/ManageOrders/ManageOrder";
@@ -45,20 +43,6 @@ export default function Layout() {
           <Route path="/register" element={<Register />}></Route>
           <Route path="*" element={<NotFound />}></Route>
         </Routes>
-
-        <ToastContainer
-          position="top-right"
-          autoClose={1000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="dark"
-          transition:Bounce
-        />
       </Suspense>
     </div>
   );

@@ -169,7 +169,11 @@ export default function TableOrders(props) {
                 </label>
               </th>
               {tableHeaders.map((header) => (
-                <th key={header.label} scope="col">
+                <th
+                  key={header.label}
+                  scope="col"
+                  className="whitespace-normal break-words"
+                >
                   <div className="flex justify-between">
                     <span>{header.label}</span>
                     {header.sortKey && (

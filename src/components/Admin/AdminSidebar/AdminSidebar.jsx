@@ -15,7 +15,7 @@ import {
   ListOrdered,
   LogIn,
   Navigation,
-  Settings,
+  Undo2,
   University,
   UserPlus,
 } from "lucide-react";
@@ -69,7 +69,7 @@ const data = {
     {
       title: "Landing pages",
       url: "#",
-      icon: Settings,
+      icon: Undo2,
       items: [
         {
           title: "Home",
