@@ -1,104 +1,152 @@
-import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
+"use client";
 import {
-  CartesianGrid,
-  Label,
-  Legend,
-  Line,
-  LineChart,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from "recharts";
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "@/components/ui/chart";
+import { useEffect, useRef, useState } from "react";
+import { CartesianGrid, Line, LineChart, XAxis } from "recharts";
 
-const SpeedLineChart = ({ dataSocket = {} }) => {
-  const [speedData, setSpeedData] = useState([]);
+export const description = "A multiple line chart";
+
+const chartConfig = {
+  AGV1: {
+    label: "AGV1",
+    color: "hsl(var(--chart-1))",
+  },
+  AGV2: {
+    label: "AGV2",
+    color: "hsl(var(--chart-2))",
+  },
+  AGV3: {
+    label: "AGV3",
+    color: "hsl(var(--chart-3))",
+  },
+  AGV4: {
+    label: "AGV4",
+    color: "hsl(var(--chart-4))",
+  },
+};
+
+export default function SpeedLineChart() {
+  const [chartData, setChartData] = useState([
+    { timestamp: "Start", AGV1: 0, AGV2: 0, AGV3: 0, AGV4: 0 },
+  ]);
+
+  const wsRef = useRef(null);
+  const lastRecordTimeRef = useRef(Date.now());
 
   useEffect(() => {
-    if (dataSocket.speed) {
-      const currentTime = new Date();
-      setSpeedData((prevData) => [
-        ...prevData,
-        { time: currentTime, speed: dataSocket.speed },
-      ]);
-    }
-  }, [dataSocket.speed]);
+    wsRef.current = new WebSocket(
+      "wss://stream.binance.com:9443/ws/btcusdt@aggTrade",
+    );
 
-  // Filter data to include only the most recent 10 seconds
-  const filteredSpeedData = speedData.filter((d) => {
-    const currentTime = new Date();
-    return currentTime - new Date(d.time) <= 10000;
-  });
+    wsRef.current.onmessage = (event) => {
+      const data = JSON.parse(event.data);
 
-  // Calculate the min and max speed values
-  const minSpeed = Math.min(...filteredSpeedData.map((d) => d.speed));
-  const maxSpeed = Math.max(...filteredSpeedData.map((d) => d.speed));
+      if (data && data.p) {
+        const agv_speed = parseFloat(data.p);
+        const now = Date.now();
+
+        // Check if 1 second or 1000 milliseconds has passed since the last recorded timestamp
+        if (now - lastRecordTimeRef.current >= 1000) {
+          lastRecordTimeRef.current = now;
+
+          // Update chart data directly without debounce
+          setChartData((prevData) => [
+            ...prevData.slice(-4), // Keep the last 4 points to display the last 5 total
+            {
+              timestamp: new Date().toLocaleTimeString("en-US", {
+                hour12: false,
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit",
+              }),
+              AGV1: agv_speed,
+              AGV2: agv_speed * 1.1,
+              AGV3: agv_speed * 1.2,
+              AGV4: agv_speed * 1.3,
+            },
+          ]);
+        }
+      }
+    };
+
+    // Clean up WebSocket connection on unmount
+    return () => wsRef.current.close();
+  }, []);
 
   return (
-    <div className="card bg-neutral shadow-xl lg:card-side">
-      <div className="card-body items-center text-center">
-        <h2 className="card-title">Speed change in real time</h2>
-
-        <LineChart
-          width={700}
-          height={400}
-          data={filteredSpeedData}
-          margin={{ top: 20, right: 100, left: 20, bottom: 40 }} // Adjust right margin for legend
-        >
-          <CartesianGrid strokeDasharray="3 3" stroke="#444" />
-          <XAxis
-            dataKey="time"
-            stroke="#ccc"
-            tickFormatter={(time) =>
-              new Date(time).toLocaleTimeString("vi-VN", { hour12: false })
-            }
+    <Card>
+      <CardHeader>
+        <CardTitle>Line Chart - Speed</CardTitle>
+        <CardDescription>
+          {new Date().toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })}
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <ChartContainer config={chartConfig} className="min-h-[200px] w-full">
+          <LineChart
+            accessibilityLayer
+            data={chartData}
+            margin={{
+              left: 12,
+              right: 12,
+            }}
           >
-            <Label
-              value="Time (s)"
-              offset={-30}
-              position="insideBottom"
-              fill="#ccc"
+            <CartesianGrid vertical={false} />
+            <XAxis
+              dataKey="timestamp"
+              tickLine={false}
+              axisLine={false}
+              tickMargin={8}
+              interval="preserveStartEnd"
+              tickCount={5}
+              tickFormatter={(value) => value} // Displays full hh:mm:ss format
             />
-          </XAxis>
-          <YAxis
-            stroke="#ccc"
-            domain={[
-              minSpeed - (maxSpeed - minSpeed) * 0.1,
-              maxSpeed + (maxSpeed - minSpeed) * 0.1,
-            ]}
-          >
-            <Label
-              value="Speed (m/s)"
-              angle={-90}
-              position="insideLeft"
-              fill="#ccc"
+            <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
+            <Line
+              dataKey="AGV1"
+              type="monotone"
+              stroke="var(--color-AGV1)"
+              strokeWidth={2}
+              dot={false}
             />
-          </YAxis>
-          <Tooltip
-            labelFormatter={(time) =>
-              new Date(time).toLocaleTimeString("vi-VN", { hour12: false })
-            }
-          />
-          <Legend layout="vertical" align="right" verticalAlign="middle" />
-          <Line
-            type="monotone"
-            dataKey="speed"
-            stroke="#8884d8"
-            strokeWidth={3} // Thicker line
-            animationDuration={500} // Shorter duration for smoother transitions
-            animationEasing="linear" // Smoother easing function
-            isAnimationActive={true} // Ensure animation is active
-          />
-        </LineChart>
-      </div>
-    </div>
+            <Line
+              dataKey="AGV2"
+              type="monotone"
+              stroke="var(--color-AGV2)"
+              strokeWidth={2}
+              dot={false}
+            />
+            <Line
+              dataKey="AGV3"
+              type="monotone"
+              stroke="var(--color-AGV3)"
+              strokeWidth={2}
+              dot={false}
+            />
+            <Line
+              dataKey="AGV4"
+              type="monotone"
+              stroke="var(--color-AGV4)"
+              strokeWidth={2}
+              dot={false}
+            />
+          </LineChart>
+        </ChartContainer>
+      </CardContent>
+    </Card>
   );
-};
-
-SpeedLineChart.propTypes = {
-  dataSocket: PropTypes.shape({
-    speed: PropTypes.number,
-  }).isRequired,
-};
-
-export default SpeedLineChart;
+}

@@ -7,40 +7,40 @@ import StatsBox from "./components/StatsBox";
 export default function Dashboard() {
   const SOCKET_URL = "wss://stream.binance.com:9443/ws/btcusdt@aggTrade";
 
-  const { lastJsonMessage } = useWebSocket(SOCKET_URL, {
-    share: false,
-    shouldReconnect: () => true,
-  });
+  // const { lastJsonMessage } = useWebSocket(SOCKET_URL, {
+  //   share: false,
+  //   shouldReconnect: () => true,
+  // });
 
-  // throttle the message
-  const [throttledJsonMessage, setThrottledJsonMessage] = useState(null);
+  // // throttle the message
+  // const [throttledJsonMessage, setThrottledJsonMessage] = useState(null);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setThrottledJsonMessage(lastJsonMessage);
-    }, 200);
-    // every 100 milliseconds
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     setThrottledJsonMessage(lastJsonMessage);
+  //   }, 200);
+  //   // every 100 milliseconds
 
-    return () => clearInterval(interval);
-  }, [lastJsonMessage]);
+  //   return () => clearInterval(interval);
+  // }, [lastJsonMessage]);
 
-  const dataSocket = useMemo(() => {
-    if (throttledJsonMessage) {
-      return {
-        speed: throttledJsonMessage?.a || 0,
-        battery: throttledJsonMessage?.f || 0,
-        obstacle: throttledJsonMessage?.m || false,
-        location: throttledJsonMessage?.l || 0,
-      };
-    } else {
-      return {
-        speed: 0,
-        battery: 0,
-        obstacle: false,
-        location: 0,
-      };
-    }
-  }, [throttledJsonMessage]);
+  // const dataSocket = useMemo(() => {
+  //   if (throttledJsonMessage) {
+  //     return {
+  //       speed: throttledJsonMessage?.a || 0,
+  //       battery: throttledJsonMessage?.f || 0,
+  //       obstacle: throttledJsonMessage?.m || false,
+  //       location: throttledJsonMessage?.l || 0,
+  //     };
+  //   } else {
+  //     return {
+  //       speed: 0,
+  //       battery: 0,
+  //       obstacle: false,
+  //       location: 0,
+  //     };
+  //   }
+  // }, [throttledJsonMessage]);
 
   const StatsBoxContainer = ({ dataSocket = {} }) => (
     <div className="flex w-full flex-col">
@@ -61,8 +61,8 @@ export default function Dashboard() {
     <div>
       <div className="space-y-5">
         <h2 className="text-3xl font-bold">Dashboard</h2>
-        <StatsBoxContainer dataSocket={dataSocket} />
-        <SpeedLineChart dataSocket={dataSocket} />
+        {/* <StatsBoxContainer dataSocket={dataSocket} /> */}
+        <SpeedLineChart />
       </div>
     </div>
   );
