@@ -1,5 +1,3 @@
-import { Github } from "../../Admin/SideBar/icons/Github";
-
 export default function HomeFooter() {
   return (
     <footer className="footer items-center bg-neutral p-4 text-neutral-content">
@@ -20,17 +18,6 @@ export default function HomeFooter() {
           iPAC Lab, {new Date().getFullYear()}
         </p>
       </aside>
-      <nav className="grid-flow-col gap-4 md:place-self-center md:justify-self-end">
-        <a
-          href="https://github.com/sondhg/agv-project"
-          target="_blank"
-          className="mb-0"
-        >
-          <span className="flex space-x-1">
-            <Github /> <span>GitHub: sondhg</span>
-          </span>
-        </a>
-      </nav>
     </footer>
   );
 }

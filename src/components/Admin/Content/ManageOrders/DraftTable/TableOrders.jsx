@@ -177,10 +177,12 @@ export default function TableOrders(props) {
                         <ArrowUp
                           size={16}
                           onClick={() => handleSort("asc", header.sortKey)}
+                          className="cursor-pointer"
                         />
                         <ArrowDown
                           size={16}
                           onClick={() => handleSort("desc", header.sortKey)}
+                          className="cursor-pointer"
                         />
                       </span>
                     )}
