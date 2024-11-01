@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import {
   Pagination,
   PaginationContent,
@@ -13,24 +14,30 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import PropTypes from "prop-types";
 import { useState } from "react";
-
-// ! remove this line when /api/AGVs is ready
-import { listAGVs } from "./dummyData";
+import { deleteAGV } from "../../../../../services/apiServices";
 
 export default function TableAGVs(props) {
-  // ! when /api/AGVs is ready, uncomment this line and delete the dummy data import
-  // const { listAGVs } = props;
+  const { listAGVs, fetchListAGVs } = props;
 
   const [currentPage, setCurrentPage] = useState(1);
-  const ROWS_PER_PAGE = 5; // number of rows per page
+  const ROWS_PER_PAGE = 4;
+
+  // Sort listAGVs by agv_id in ascending order
+  const sortedListAGVs = [...listAGVs].sort((a, b) => a.agv_id - b.agv_id);
 
   const indexOfLastRow = currentPage * ROWS_PER_PAGE;
   const indexOfFirstRow = indexOfLastRow - ROWS_PER_PAGE;
-  const currentRows = listAGVs.slice(indexOfFirstRow, indexOfLastRow);
+  const currentRows = sortedListAGVs.slice(indexOfFirstRow, indexOfLastRow);
 
-  const totalPages = Math.ceil(listAGVs.length / ROWS_PER_PAGE);
+  const totalPages = Math.ceil(sortedListAGVs.length / ROWS_PER_PAGE);
 
   const handleNextPage = () => {
     if (currentPage < totalPages) {
@@ -44,15 +51,25 @@ export default function TableAGVs(props) {
     }
   };
 
-  //edit tableHeaders if you want more columns
+  const handleDelete = async (agvId) => {
+    try {
+      await deleteAGV(agvId);
+      await fetchListAGVs();
+    } catch (error) {
+      console.error("Failed to delete AGV:", error);
+    }
+  };
+
   const tableHeaders = [
-    { name: "Schedule ID", key: "agv_id" },
-    { name: "Max speed", key: "max_speed" },
-    { name: "Max battery", key: "max_battery" },
-    { name: "Max load", key: "max_load" },
-    { name: "Guidance type", key: "guidance_type" },
-    { name: "Is connected?", key: "is_connected" },
-    { name: "Is busy?", key: "is_busy" },
+    { label: "AGV ID", key: "agv_id" },
+    { label: "Guidance type", key: "guidance_type" },
+    { label: "Max battery", key: "max_battery" },
+    { label: "Max load", key: "max_load" },
+    { label: "Max speed", key: "max_speed" },
+    { label: "Is connected?", key: "is_connected" },
+    { label: "Is busy?", key: "is_busy" },
+    { label: "Is active?", key: "is_active" },
+    { label: "Action", key: null },
   ];
 
   return (
@@ -63,9 +80,9 @@ export default function TableAGVs(props) {
             {tableHeaders.map((header, index) => (
               <TableHead
                 key={index}
-                className={header.name === "Schedule ID" ? "w-[120px]" : ""}
+                className={header.label === "AGV ID" ? "w-[120px]" : ""}
               >
-                {header.name}
+                {header.label}
               </TableHead>
             ))}
           </TableRow>
@@ -79,7 +96,33 @@ export default function TableAGVs(props) {
                     key={cellIndex}
                     className={header.key === "agv_id" ? "font-medium" : ""}
                   >
-                    {item[header.key]}
+                    {header.key === "is_connected" ||
+                    header.key === "is_busy" ||
+                    header.key === "is_active" ? (
+                      item[header.key] ? (
+                        "Yes"
+                      ) : (
+                        "No"
+                      )
+                    ) : header.label === "Action" ? (
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Button
+                              variant="destructive"
+                              onClick={() => handleDelete(item.agv_id)}
+                            >
+                              Delete
+                            </Button>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>Remove this AGV from team</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
+                    ) : (
+                      item[header.key]
+                    )}
                   </TableCell>
                 ))}
               </TableRow>
@@ -121,4 +164,5 @@ export default function TableAGVs(props) {
 
 TableAGVs.propTypes = {
   listAGVs: PropTypes.array,
+  fetchListAGVs: PropTypes.func.isRequired,
 };

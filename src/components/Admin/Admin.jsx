@@ -37,7 +37,7 @@ export default function Admin() {
             </Breadcrumb>
           </div>
         </header>
-        <div className="bg-slate-800">
+        <div>
           <div className="flex min-h-dvh flex-1 flex-col gap-4 p-5">
             <Outlet />
           </div>

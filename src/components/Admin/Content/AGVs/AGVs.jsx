@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getAllAGVs } from "../../../../services/apiServices";
+import { FormAGVs } from "./components/FormAGVs";
 import TableAGVs from "./components/TableAGVs";
 
 export default function AGVs() {
@@ -19,7 +20,8 @@ export default function AGVs() {
     <div>
       <div className="space-y-5">
         <h2 className="text-3xl font-bold">AGVs</h2>
-        <TableAGVs listAGVs={listAGVs} />
+        <FormAGVs fetchListAGVs={fetchListAGVs} />
+        <TableAGVs listAGVs={listAGVs} fetchListAGVs={fetchListAGVs} />
       </div>
     </div>
   );

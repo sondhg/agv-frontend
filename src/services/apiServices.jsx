@@ -41,7 +41,15 @@ const getAllSchedules = () => {
 };
 
 const getAllAGVs = () => {
-  return axios.get("/schedules/");
+  return axios.get("/agvs/");
+};
+
+const postCreateAGV = (agv) => {
+  return axios.post("/agvs/", agv);
+};
+
+const deleteAGV = (agvId) => {
+  return axios.delete(`/agvs/${agvId}/`, { data: { agv_id: agvId } });
 };
 
 export {
@@ -61,4 +69,6 @@ export {
 
   // AGVs
   getAllAGVs,
+  postCreateAGV,
+  deleteAGV,
 };
