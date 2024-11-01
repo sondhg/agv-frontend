@@ -60,48 +60,50 @@ export default function TableSchedules(props) {
 
   return (
     <div className="relative min-h-96">
-      <Table>
-        <TableHeader>
-          <TableRow>
-            {tableHeaders.map((header, index) => (
-              <TableHead
-                key={index}
-                className={header.name === "Schedule ID" ? "w-[120px]" : ""}
-              >
-                {header.name}
-              </TableHead>
-            ))}
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {Array.isArray(currentRows) && currentRows.length > 0 ? (
-            currentRows.map((item, index) => (
-              <TableRow key={index}>
-                {tableHeaders.map((header, cellIndex) => (
-                  <TableCell
-                    key={cellIndex}
-                    className={
-                      header.key === "schedule_id" ? "font-medium" : ""
-                    }
-                  >
-                    {header.key === "load_amount"
-                      ? `${item[header.key]} units`
-                      : header.key === "load_weight"
-                        ? `${item[header.key]} kg`
-                        : item[header.key]}
-                  </TableCell>
-                ))}
-              </TableRow>
-            ))
-          ) : (
+      <div className="rounded-md border-2">
+        <Table>
+          <TableHeader>
             <TableRow>
-              <TableCell colSpan={tableHeaders.length}>
-                No schedules available.
-              </TableCell>
+              {tableHeaders.map((header, index) => (
+                <TableHead
+                  key={index}
+                  className={header.name === "Schedule ID" ? "w-[120px]" : ""}
+                >
+                  {header.name}
+                </TableHead>
+              ))}
             </TableRow>
-          )}
-        </TableBody>
-      </Table>
+          </TableHeader>
+          <TableBody>
+            {Array.isArray(currentRows) && currentRows.length > 0 ? (
+              currentRows.map((item, index) => (
+                <TableRow key={index}>
+                  {tableHeaders.map((header, cellIndex) => (
+                    <TableCell
+                      key={cellIndex}
+                      className={
+                        header.key === "schedule_id" ? "font-medium" : ""
+                      }
+                    >
+                      {header.key === "load_amount"
+                        ? `${item[header.key]} units`
+                        : header.key === "load_weight"
+                          ? `${item[header.key]} kg`
+                          : item[header.key]}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan={tableHeaders.length}>
+                  No schedules available.
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </div>
 
       <Pagination className="absolute bottom-0 w-full">
         <PaginationContent>

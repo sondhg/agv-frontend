@@ -74,68 +74,70 @@ export default function TableAGVs(props) {
 
   return (
     <div className="relative min-h-96">
-      <Table>
-        <TableHeader>
-          <TableRow>
-            {tableHeaders.map((header, index) => (
-              <TableHead
-                key={index}
-                className={header.label === "AGV ID" ? "w-[120px]" : ""}
-              >
-                {header.label}
-              </TableHead>
-            ))}
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {Array.isArray(currentRows) && currentRows.length > 0 ? (
-            currentRows.map((item, index) => (
-              <TableRow key={index}>
-                {tableHeaders.map((header, cellIndex) => (
-                  <TableCell
-                    key={cellIndex}
-                    className={header.key === "agv_id" ? "font-medium" : ""}
-                  >
-                    {header.key === "is_connected" ||
-                    header.key === "is_busy" ||
-                    header.key === "is_active" ? (
-                      item[header.key] ? (
-                        "Yes"
-                      ) : (
-                        "No"
-                      )
-                    ) : header.label === "Action" ? (
-                      <TooltipProvider>
-                        <Tooltip>
-                          <TooltipTrigger asChild>
-                            <Button
-                              variant="destructive"
-                              onClick={() => handleDelete(item.agv_id)}
-                            >
-                              Delete
-                            </Button>
-                          </TooltipTrigger>
-                          <TooltipContent>
-                            <p>Remove this AGV from team</p>
-                          </TooltipContent>
-                        </Tooltip>
-                      </TooltipProvider>
-                    ) : (
-                      item[header.key]
-                    )}
-                  </TableCell>
-                ))}
-              </TableRow>
-            ))
-          ) : (
+      <div className="rounded-md border-2">
+        <Table>
+          <TableHeader>
             <TableRow>
-              <TableCell colSpan={tableHeaders.length}>
-                No data available
-              </TableCell>
+              {tableHeaders.map((header, index) => (
+                <TableHead
+                  key={index}
+                  className={header.label === "AGV ID" ? "w-[120px]" : ""}
+                >
+                  {header.label}
+                </TableHead>
+              ))}
             </TableRow>
-          )}
-        </TableBody>
-      </Table>
+          </TableHeader>
+          <TableBody>
+            {Array.isArray(currentRows) && currentRows.length > 0 ? (
+              currentRows.map((item, index) => (
+                <TableRow key={index}>
+                  {tableHeaders.map((header, cellIndex) => (
+                    <TableCell
+                      key={cellIndex}
+                      className={header.key === "agv_id" ? "font-medium" : ""}
+                    >
+                      {header.key === "is_connected" ||
+                      header.key === "is_busy" ||
+                      header.key === "is_active" ? (
+                        item[header.key] ? (
+                          "Yes"
+                        ) : (
+                          "No"
+                        )
+                      ) : header.label === "Action" ? (
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <Button
+                                variant="destructive"
+                                onClick={() => handleDelete(item.agv_id)}
+                              >
+                                Delete
+                              </Button>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>Remove this AGV from team</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
+                      ) : (
+                        item[header.key]
+                      )}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan={tableHeaders.length}>
+                  No data available
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </div>
 
       <Pagination className="absolute bottom-0 w-full">
         <PaginationContent>
